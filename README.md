@@ -97,30 +97,30 @@ Hệ thống được tổ chức chặt chẽ theo mô hình **MVC 3 tầng (Mo
 Toàn bộ các luồng nghiệp vụ hiện có trong mã nguồn dự án được tổ chức theo từng phân hệ người dùng:
 
 ### 3.1. Phân hệ Xác thực & Quản lý Phiên (Authentication & Session)
-1. **Đăng ký tài khoản mới (`RegisterFrm`)**: Khách vãng lai đăng ký tài khoản với tên đăng nhập duy nhất. Hệ thống tự động cấp ngay một ví tiền cá nhân với số dư ban đầu 0 VNĐ.
-2. **Đăng nhập hệ thống (`LoginFrm`)**: Xác thực thông tin đăng nhập, kiểm tra trạng thái tài khoản không bị `LOCKED`. Phân quyền theo vai trò (`STUDENT`, `TUTOR`, `ADMIN`) để điều hướng mở đúng giao diện chính tương ứng.
+1. **Đăng ký tài khoản mới (`RegisterView`)**: Khách vãng lai đăng ký tài khoản với tên đăng nhập duy nhất. Hệ thống tự động cấp ngay một ví tiền cá nhân với số dư ban đầu 0 VNĐ.
+2. **Đăng nhập hệ thống (`LoginView`)**: Xác thực thông tin đăng nhập, kiểm tra trạng thái tài khoản không bị `LOCKED`. Phân quyền theo vai trò (`STUDENT`, `TUTOR`, `ADMIN`) để điều hướng mở đúng giao diện chính tương ứng.
 3. **Đăng xuất an toàn**: Hiển thị hộp thoại xác nhận kết thúc phiên trên tất cả các màn hình Home, xóa sạch tham chiếu `currentUser` trong bộ nhớ và quay về màn hình Đăng nhập.
 
 ### 3.2. Phân hệ Học viên (Student Module)
-4. **Tra cứu hồ sơ & Gói dịch vụ gia sư (`TutorSearchFrm`, `TutorDetailFrm`)**: Tìm kiếm theo tên gia sư, môn học hoặc từ khóa chuyên môn. Xem chi tiết hồ sơ cá nhân, điểm đánh giá (`rating`) và các gói học đang hoạt động.
-5. **Đặt lịch thuê gia sư (`BookingRequestFrm`)**: Chọn gói học, ngày giờ bắt đầu và thời lượng. Hệ thống tự động kích hoạt thuật toán phát hiện xung đột thời gian (Collision Detection) đối chiếu với các lịch đã xác nhận của gia sư trước khi tạo đơn `PENDING_TUTOR_CONFIRMATION`.
-6. **Quản lý lịch học & Thanh toán học phí trực tiếp bằng ví (`PaymentCheckoutFrm`)**: Học viên theo dõi tiến trình lịch học. Khi lịch học được gia sư chấp nhận (`ACCEPTED`), học viên thực hiện thanh toán trực tiếp. Hệ thống trừ tiền ví học viên, cộng tiền ví gia sư và cập nhật trạng thái `PAID` trong cùng một giao dịch nguyên tử.
-7. **Khiếu nại buổi học & Yêu cầu hoàn tiền (`CreateDisputeFrm`)**: Đối với các buổi học đã thanh toán (`PAID`), nếu gia sư vắng mặt hoặc vi phạm cam kết, học viên gửi khiếu nại kèm lý do, bằng chứng và số tiền đề nghị hoàn lại $\rightarrow$ Tạo bản ghi `tblDispute` trạng thái `PENDING`.
-8. **Nạp tiền vào ví qua Cổng thanh toán mô phỏng (`WalletTopUpFrm`, `MockPaymentGatewayFrm`)**: Học viên nhập số tiền cần nạp, hệ thống tạo giao dịch `DEPOSIT/PENDING` và mở giao diện mô phỏng cổng thanh toán để xác nhận `SUCCESS` (cộng số dư khả dụng) hoặc `FAILED`.
-9. **Nộp và theo dõi hồ sơ ứng tuyển làm gia sư (`TutorApplicationFrm`)**: Học viên điền thông tin giới thiệu, môn có thể dạy, liên kết CV và bài kiểm tra chuyên môn. Hồ sơ được lưu ở trạng thái `PENDING` chờ quản trị viên xét duyệt (học viên có thể hủy hồ sơ khi đang chờ).
+4. **Tra cứu hồ sơ & Gói dịch vụ gia sư (`TutorSearchView`, `TutorDetailView`)**: Tìm kiếm theo tên gia sư, môn học hoặc từ khóa chuyên môn. Xem chi tiết hồ sơ cá nhân, điểm đánh giá (`rating`) và các gói học đang hoạt động.
+5. **Đặt lịch thuê gia sư (`BookingRequestView`)**: Chọn gói học, ngày giờ bắt đầu và thời lượng. Hệ thống tự động kích hoạt thuật toán phát hiện xung đột thời gian (Collision Detection) đối chiếu với các lịch đã xác nhận của gia sư trước khi tạo đơn `PENDING_TUTOR_CONFIRMATION`.
+6. **Quản lý lịch học & Thanh toán học phí trực tiếp bằng ví (`PaymentCheckoutView`)**: Học viên theo dõi tiến trình lịch học. Khi lịch học được gia sư chấp nhận (`ACCEPTED`), học viên thực hiện thanh toán trực tiếp. Hệ thống trừ tiền ví học viên, cộng tiền ví gia sư và cập nhật trạng thái `PAID` trong cùng một giao dịch nguyên tử.
+7. **Khiếu nại buổi học & Yêu cầu hoàn tiền (`CreateDisputeView`)**: Đối với các buổi học đã thanh toán (`PAID`), nếu gia sư vắng mặt hoặc vi phạm cam kết, học viên gửi khiếu nại kèm lý do, bằng chứng và số tiền đề nghị hoàn lại $\rightarrow$ Tạo bản ghi `tblDispute` trạng thái `PENDING`.
+8. **Nạp tiền vào ví qua Cổng thanh toán mô phỏng (`WalletTopUpView`, `MockPaymentGatewayView`)**: Học viên nhập số tiền cần nạp, hệ thống tạo giao dịch `DEPOSIT/PENDING` và mở giao diện mô phỏng cổng thanh toán để xác nhận `SUCCESS` (cộng số dư khả dụng) hoặc `FAILED`.
+9. **Nộp và theo dõi hồ sơ ứng tuyển làm gia sư (`TutorApplicationView`)**: Học viên điền thông tin giới thiệu, môn có thể dạy, liên kết CV và bài kiểm tra chuyên môn. Hồ sơ được lưu ở trạng thái `PENDING` chờ quản trị viên xét duyệt (học viên có thể hủy hồ sơ khi đang chờ).
 
 ### 3.3. Phân hệ Gia sư (Tutor Module)
-10. **Tiếp nhận & Xử lý yêu cầu đặt lịch (`TutorBookingFrm`)**: Gia sư xem danh sách các lịch học học viên gửi tới. Sau khi xem xét thời gian và ghi chú, gia sư lựa chọn **Chấp nhận** (`ACCEPTED` - cho phép học viên thanh toán) hoặc **Từ chối** (`REJECTED`).
-11. **Thiết lập & Quản lý gói dịch vụ giảng dạy (`TutorPackageManagerFrm`)**: Gia sư tự cấu hình danh mục các gói học cá nhân cung cấp (Tên gói, mô tả, mức học phí, kích hoạt/tạm dừng). Dữ liệu này làm cơ sở cho học viên tìm kiếm và đặt lịch.
-12. **Yêu cầu rút tiền về ngân hàng (`CreateWithdrawalFrm`)**: Gia sư nhập số tiền muốn rút (không vượt quá số dư khả dụng trong ví), tên ngân hàng, số tài khoản và tên chủ thẻ. Hệ thống trừ tiền trong ví và tạo yêu cầu rút tiền `tblWithdrawal` ở trạng thái `PENDING`.
+10. **Tiếp nhận & Xử lý yêu cầu đặt lịch (`TutorBookingView`)**: Gia sư xem danh sách các lịch học học viên gửi tới. Sau khi xem xét thời gian và ghi chú, gia sư lựa chọn **Chấp nhận** (`ACCEPTED` - cho phép học viên thanh toán) hoặc **Từ chối** (`REJECTED`).
+11. **Thiết lập & Quản lý gói dịch vụ giảng dạy (`TutorPackageManagerView`)**: Gia sư tự cấu hình danh mục các gói học cá nhân cung cấp (Tên gói, mô tả, mức học phí, kích hoạt/tạm dừng). Dữ liệu này làm cơ sở cho học viên tìm kiếm và đặt lịch.
+12. **Yêu cầu rút tiền về ngân hàng (`CreateWithdrawalView`)**: Gia sư nhập số tiền muốn rút (không vượt quá số dư khả dụng trong ví), tên ngân hàng, số tài khoản và tên chủ thẻ. Hệ thống trừ tiền trong ví và tạo yêu cầu rút tiền `tblWithdrawal` ở trạng thái `PENDING`.
 
 ### 3.4. Phân hệ Quản trị viên (Admin Module)
-13. **Quản trị người dùng & Trạng thái tài khoản (`AdminUserManagementFrm`)**: Tìm kiếm tài khoản theo tên, vai trò và trạng thái; thực hiện Khóa (`LOCKED`) hoặc Mở khóa (`ACTIVE`). Hệ thống chặn không cho quản trị viên tự khóa chính tài khoản của mình.
-14. **Xét duyệt hồ sơ ứng tuyển gia sư (`AdminApplicationReviewFrm`)**: Thẩm định thông tin ứng viên, CV và bài test. Nếu Chấp thuận: Cập nhật hồ sơ `APPROVED`, chuyển đổi vai trò người dùng thành `TUTOR`, tự động khởi tạo hồ sơ `TutorProfile` với điểm đánh giá khởi điểm 5.0 và ghi nhận nhật ký kiểm toán.
-15. **Giám sát danh mục gói dịch vụ (`AdminPackageInquiryFrm`)**: Tra cứu và kiểm tra thông tin, giá cả và tình trạng hoạt động của toàn bộ các gói dịch vụ do các gia sư thiết lập trên hệ thống.
-16. **Xử lý khiếu nại & Chuyển hoàn học phí (`AdminDisputeReviewFrm`)**: Thẩm tra lý do và bằng chứng khiếu nại. Nếu chấp thuận: Hệ thống tự động chuyển số tiền hoàn từ ví gia sư trả về ví học viên và cập nhật khiếu nại sang `APPROVED`. Nếu từ chối: Cập nhật `REJECTED` kèm ghi chú giải trình.
-17. **Tra cứu yêu cầu rút tiền (`AdminWithdrawalInquiryFrm`)**: Xem danh sách rút tiền với số tài khoản được che bảo mật (`••••1234`), hỗ trợ quản trị viên đối soát tài chính ngân hàng.
-18. **Tra cứu nhật ký kiểm toán hệ thống (`AdminActionLogInquiryFrm`)**: Tra cứu lịch sử toàn bộ các hành động quản trị và biến động quan trọng (`APPLY_TUTOR`, `UPDATE_USER_STATUS`, `REVIEW_TUTOR_APPLICATION`, `RESOLVE_DISPUTE`...) kèm định danh người thực hiện, thời gian, IP và User-Agent.
+13. **Quản trị người dùng & Trạng thái tài khoản (`AdminUserManagementView`)**: Tìm kiếm tài khoản theo tên, vai trò và trạng thái; thực hiện Khóa (`LOCKED`) hoặc Mở khóa (`ACTIVE`). Hệ thống chặn không cho quản trị viên tự khóa chính tài khoản của mình.
+14. **Xét duyệt hồ sơ ứng tuyển gia sư (`AdminApplicationReviewView`)**: Thẩm định thông tin ứng viên, CV và bài test. Nếu Chấp thuận: Cập nhật hồ sơ `APPROVED`, chuyển đổi vai trò người dùng thành `TUTOR`, tự động khởi tạo hồ sơ `TutorProfile` với điểm đánh giá khởi điểm 5.0 và ghi nhận nhật ký kiểm toán.
+15. **Giám sát danh mục gói dịch vụ (`AdminPackageInquiryView`)**: Tra cứu và kiểm tra thông tin, giá cả và tình trạng hoạt động của toàn bộ các gói dịch vụ do các gia sư thiết lập trên hệ thống.
+16. **Xử lý khiếu nại & Chuyển hoàn học phí (`AdminDisputeReviewView`)**: Thẩm tra lý do và bằng chứng khiếu nại. Nếu chấp thuận: Hệ thống tự động chuyển số tiền hoàn từ ví gia sư trả về ví học viên và cập nhật khiếu nại sang `APPROVED`. Nếu từ chối: Cập nhật `REJECTED` kèm ghi chú giải trình.
+17. **Tra cứu yêu cầu rút tiền (`AdminWithdrawalInquiryView`)**: Xem danh sách rút tiền với số tài khoản được che bảo mật (`••••1234`), hỗ trợ quản trị viên đối soát tài chính ngân hàng.
+18. **Tra cứu nhật ký kiểm toán hệ thống (`AdminActionLogInquiryView`)**: Tra cứu lịch sử toàn bộ các hành động quản trị và biến động quan trọng (`APPLY_TUTOR`, `UPDATE_USER_STATUS`, `REVIEW_TUTOR_APPLICATION`, `RESOLVE_DISPUTE`...) kèm định danh người thực hiện, thời gian, IP và User-Agent.
 
 ---
 
@@ -128,23 +128,23 @@ Toàn bộ các luồng nghiệp vụ hiện có trong mã nguồn dự án đư
 
 | STT | Luồng Nghiệp vụ | Tác tử chính | Giao diện (View) | Lớp DAO xử lý | Bảng CSDL tác động |
 | :---: | :--- | :--- | :--- | :--- | :--- |
-| **01** | Đăng ký tài khoản | Khách | `RegisterFrm` | `UserDAO`, `WalletDAO` | `tblUser`, `tblWallet` |
-| **02** | Đăng nhập & Đăng xuất | Tất cả | `LoginFrm`, các `*HomeFrm` | `UserDAO` | `tblUser` |
-| **03** | Tra cứu gia sư & gói học | Học viên | `TutorSearchFrm`, `TutorDetailFrm` | `UserDAO`, `TutorProfileDAO`, `BrokeragePackageDAO` | `tblUser`, `tblTutorProfile`, `tblBrokeragePackage` |
-| **04** | Đặt lịch thuê gia sư | Học viên | `BookingRequestFrm` | `BookingDAO`, `BrokeragePackageDAO` | `tblBooking` |
-| **05** | Quản lý & Thanh toán tiền học | Học viên | `PaymentCheckoutFrm` | `BookingDAO`, `WalletDAO`, `PaymentTransactionDAO` | `tblBooking`, `tblWallet`, `tblPaymentTransaction` |
-| **06** | Nạp tiền ví qua Cổng mô phỏng | Học viên | `WalletTopUpFrm`, `MockPaymentGatewayFrm` | `WalletDAO`, `PaymentTransactionDAO` | `tblWallet`, `tblPaymentTransaction` |
-| **07** | Nộp hồ sơ ứng tuyển gia sư | Học viên | `TutorApplicationFrm` | `TutorApplicationDAO`, `ActionLogDAO` | `tblTutorApplication`, `tblActionLog` |
-| **08** | Khiếu nại buổi học & hoàn tiền | Học viên | `CreateDisputeFrm` | `DisputeDAO` | `tblDispute` |
-| **09** | Tiếp nhận & phản hồi lịch đặt | Gia sư | `TutorBookingFrm` | `BookingDAO` | `tblBooking` |
-| **10** | Quản lý gói dịch vụ giảng dạy | Gia sư | `TutorPackageManagerFrm` | `BrokeragePackageDAO` | `tblBrokeragePackage` |
-| **11** | Yêu cầu rút tiền về ngân hàng | Gia sư | `CreateWithdrawalFrm` | `WithdrawalDAO`, `WalletDAO` | `tblWithdrawal`, `tblWallet` |
-| **12** | Quản lý tài khoản người dùng | Admin | `AdminUserManagementFrm` | `UserDAO`, `ActionLogDAO` | `tblUser`, `tblActionLog` |
-| **13** | Xét duyệt hồ sơ ứng tuyển | Admin | `AdminApplicationReviewFrm` | `TutorApplicationDAO`, `UserDAO`, `TutorProfileDAO`, `ActionLogDAO` | `tblTutorApplication`, `tblUser`, `tblTutorProfile`, `tblActionLog` |
-| **14** | Giám sát danh sách gói học | Admin | `AdminPackageInquiryFrm` | `BrokeragePackageDAO`, `UserDAO` | `tblBrokeragePackage`, `tblUser` |
-| **15** | Xử lý khiếu nại hoàn tiền | Admin | `AdminDisputeReviewFrm` | `DisputeDAO`, `WalletDAO`, `PaymentTransactionDAO`, `ActionLogDAO` | `tblDispute`, `tblWallet`, `tblPaymentTransaction`, `tblActionLog` |
-| **16** | Tra cứu yêu cầu rút tiền | Admin | `AdminWithdrawalInquiryFrm` | `WithdrawalDAO`, `UserDAO` | `tblWithdrawal` |
-| **17** | Tra cứu nhật ký kiểm toán | Admin | `AdminActionLogInquiryFrm` | `ActionLogDAO`, `UserDAO` | `tblActionLog` |
+| **01** | Đăng ký tài khoản | Khách | `RegisterView` | `UserDAO`, `WalletDAO` | `tblUser`, `tblWallet` |
+| **02** | Đăng nhập & Đăng xuất | Tất cả | `LoginView`, các `*HomeView` | `UserDAO` | `tblUser` |
+| **03** | Tra cứu gia sư & gói học | Học viên | `TutorSearchView`, `TutorDetailView` | `UserDAO`, `TutorProfileDAO`, `BrokeragePackageDAO` | `tblUser`, `tblTutorProfile`, `tblBrokeragePackage` |
+| **04** | Đặt lịch thuê gia sư | Học viên | `BookingRequestView` | `BookingDAO`, `BrokeragePackageDAO` | `tblBooking` |
+| **05** | Quản lý & Thanh toán tiền học | Học viên | `PaymentCheckoutView` | `BookingDAO`, `WalletDAO`, `PaymentTransactionDAO` | `tblBooking`, `tblWallet`, `tblPaymentTransaction` |
+| **06** | Nạp tiền ví qua Cổng mô phỏng | Học viên | `WalletTopUpView`, `MockPaymentGatewayView` | `WalletDAO`, `PaymentTransactionDAO` | `tblWallet`, `tblPaymentTransaction` |
+| **07** | Nộp hồ sơ ứng tuyển gia sư | Học viên | `TutorApplicationView` | `TutorApplicationDAO`, `ActionLogDAO` | `tblTutorApplication`, `tblActionLog` |
+| **08** | Khiếu nại buổi học & hoàn tiền | Học viên | `CreateDisputeView` | `DisputeDAO` | `tblDispute` |
+| **09** | Tiếp nhận & phản hồi lịch đặt | Gia sư | `TutorBookingView` | `BookingDAO` | `tblBooking` |
+| **10** | Quản lý gói dịch vụ giảng dạy | Gia sư | `TutorPackageManagerView` | `BrokeragePackageDAO` | `tblBrokeragePackage` |
+| **11** | Yêu cầu rút tiền về ngân hàng | Gia sư | `CreateWithdrawalView` | `WithdrawalDAO`, `WalletDAO` | `tblWithdrawal`, `tblWallet` |
+| **12** | Quản lý tài khoản người dùng | Admin | `AdminUserManagementView` | `UserDAO`, `ActionLogDAO` | `tblUser`, `tblActionLog` |
+| **13** | Xét duyệt hồ sơ ứng tuyển | Admin | `AdminApplicationReviewView` | `TutorApplicationDAO`, `UserDAO`, `TutorProfileDAO`, `ActionLogDAO` | `tblTutorApplication`, `tblUser`, `tblTutorProfile`, `tblActionLog` |
+| **14** | Giám sát danh sách gói học | Admin | `AdminPackageInquiryView` | `BrokeragePackageDAO`, `UserDAO` | `tblBrokeragePackage`, `tblUser` |
+| **15** | Xử lý khiếu nại hoàn tiền | Admin | `AdminDisputeReviewView` | `DisputeDAO`, `WalletDAO`, `PaymentTransactionDAO`, `ActionLogDAO` | `tblDispute`, `tblWallet`, `tblPaymentTransaction`, `tblActionLog` |
+| **16** | Tra cứu yêu cầu rút tiền | Admin | `AdminWithdrawalInquiryView` | `WithdrawalDAO`, `UserDAO` | `tblWithdrawal` |
+| **17** | Tra cứu nhật ký kiểm toán | Admin | `AdminActionLogInquiryView` | `ActionLogDAO`, `UserDAO` | `tblActionLog` |
 
 ---
 
@@ -264,31 +264,31 @@ TutorTech/
 │   │   │   │   └── ActionLogDAO.java
 │   │   │   └── view/                # 22 Màn hình giao diện Java Swing (Boundary)
 │   │   │       ├── auth/
-│   │   │       │   ├── LoginFrm.java
-│   │   │       │   └── RegisterFrm.java
+│   │   │       │   ├── LoginView.java
+│   │   │       │   └── RegisterView.java
 │   │   │       ├── student/
-│   │   │       │   ├── StudentHomeFrm.java
-│   │   │       │   ├── TutorSearchFrm.java
-│   │   │       │   ├── TutorDetailFrm.java
-│   │   │       │   ├── BookingRequestFrm.java
-│   │   │       │   ├── PaymentCheckoutFrm.java
-│   │   │       │   ├── CreateDisputeFrm.java
-│   │   │       │   ├── WalletTopUpFrm.java
-│   │   │       │   ├── MockPaymentGatewayFrm.java
-│   │   │       │   └── TutorApplicationFrm.java
+│   │   │       │   ├── StudentHomeView.java
+│   │   │       │   ├── TutorSearchView.java
+│   │   │       │   ├── TutorDetailView.java
+│   │   │       │   ├── BookingRequestView.java
+│   │   │       │   ├── PaymentCheckoutView.java
+│   │   │       │   ├── CreateDisputeView.java
+│   │   │       │   ├── WalletTopUpView.java
+│   │   │       │   ├── MockPaymentGatewayView.java
+│   │   │       │   └── TutorApplicationView.java
 │   │   │       ├── tutor/
-│   │   │       │   ├── TutorHomeFrm.java
-│   │   │       │   ├── TutorBookingFrm.java
-│   │   │       │   ├── TutorPackageManagerFrm.java
-│   │   │       │   └── CreateWithdrawalFrm.java
+│   │   │       │   ├── TutorHomeView.java
+│   │   │       │   ├── TutorBookingView.java
+│   │   │       │   ├── TutorPackageManagerView.java
+│   │   │       │   └── CreateWithdrawalView.java
 │   │   │       └── admin/
-│   │   │           ├── AdminHomeFrm.java
-│   │   │           ├── AdminUserManagementFrm.java
-│   │   │           ├── AdminApplicationReviewFrm.java
-│   │   │           ├── AdminPackageInquiryFrm.java
-│   │   │           ├── AdminDisputeReviewFrm.java
-│   │   │           ├── AdminWithdrawalInquiryFrm.java
-│   │   │           └── AdminActionLogInquiryFrm.java
+│   │   │           ├── AdminHomeView.java
+│   │   │           ├── AdminUserManagementView.java
+│   │   │           ├── AdminApplicationReviewView.java
+│   │   │           ├── AdminPackageInquiryView.java
+│   │   │           ├── AdminDisputeReviewView.java
+│   │   │           ├── AdminWithdrawalInquiryView.java
+│   │   │           └── AdminActionLogInquiryView.java
 │   │   └── resources/
 │   │       └── db.properties        # Thông số cấu hình URL, user, pass CSDL
 │   └── test/
@@ -379,7 +379,7 @@ Tất cả các tài khoản mẫu đều dùng chung mật khẩu mặc định
 3. Đăng xuất, đăng nhập tài khoản Quản trị `admin` / `123456`.
 4. Admin vào **"2. Xét duyệt hồ sơ ứng tuyển gia sư"** $\rightarrow$ Thấy hồ sơ của `student02` ở trạng thái `PENDING` $\rightarrow$ Nhập ghi chú và bấm **"Chấp thuận & Cấp quyền Gia sư"**.
 5. Đăng xuất Admin, đăng nhập lại tài khoản `student02`.
-6. **Kết quả**: Hệ thống nhận diện tài khoản đã thăng cấp thành `TUTOR` và tự động mở thẳng giao diện chính của Gia sư (`TutorHomeFrm`)!
+6. **Kết quả**: Hệ thống nhận diện tài khoản đã thăng cấp thành `TUTOR` và tự động mở thẳng giao diện chính của Gia sư (`TutorHomeView`)!
 
 ### Kịch bản 4: Nạp tiền vào ví qua Cổng thanh toán mô phỏng
 1. Đăng nhập `student01` (Số dư hiện tại: 200.000 VNĐ).
@@ -410,14 +410,14 @@ Trong quá trình phân tích và đối chiếu toàn diện giữa **Tài li�
 ### 11.1: Các luồng TRONG CODE ĐÃ LÀM nhưng BÁO CÁO BTL.DOCX BỊ THIẾU
 Do tài liệu `BTL.docx` bị khống chế cứng trong **hạn ngạch 14 chức năng (CN01 – CN14)** và tác giả đã dành tới 6 chức năng cho Quản trị viên (Admin), nên có **3 luồng nghiệp vụ cốt lõi của Học viên và Gia sư bị gạt ra khỏi danh mục Use Case chính thức**:
 
-1. **Gia sư thiết lập & quản lý gói dịch vụ (`TutorPackageManagerFrm`)**:
-   - *Code thực tế*: Đã có giao diện `TutorPackageManagerFrm` và hàm `BrokeragePackageDAO.insert()`. Gia sư tự đặt tên gói, mô tả, mức giá và trạng thái hoạt động.
+1. **Gia sư thiết lập & quản lý gói dịch vụ (`TutorPackageManagerView`)**:
+   - *Code thực tế*: Đã có giao diện `TutorPackageManagerView` và hàm `BrokeragePackageDAO.insert()`. Gia sư tự đặt tên gói, mô tả, mức giá và trạng thái hoạt động.
    - *Điểm thiếu trong Doc*: Tài liệu chỉ có *CN11 (Admin tra cứu gói)* và *CN03 (Học viên xem gói)*, nhưng không có Use Case nào cho người trực tiếp tạo ra gói học. Doc chỉ nói lướt qua một câu: *"Gói dịch vụ do gia sư quản lý... là đầu vào cho các chức năng quản trị"*.
-2. **Gia sư tạo yêu cầu rút tiền về ngân hàng (`CreateWithdrawalFrm`)**:
-   - *Code thực tế*: Đã có giao diện `CreateWithdrawalFrm`, `WithdrawalDAO.insert()` và trừ tiền ví qua `WalletDAO.debit()`.
+2. **Gia sư tạo yêu cầu rút tiền về ngân hàng (`CreateWithdrawalView`)**:
+   - *Code thực tế*: Đã có giao diện `CreateWithdrawalView`, `WithdrawalDAO.insert()` và trừ tiền ví qua `WalletDAO.debit()`.
    - *Điểm thiếu trong Doc*: Tài liệu chỉ có *CN13 (Admin tra cứu rút tiền)*, nhưng không có Use Case mô tả quy trình Gia sư nộp yêu cầu rút tiền. Doc mặc định coi bản ghi `RT01` đã tự có sẵn trong cơ sở dữ liệu kiểm thử.
-3. **Học viên gửi khiếu nại lịch học đã thanh toán (`CreateDisputeFrm`)**:
-   - *Code thực tế*: Đã có giao diện `CreateDisputeFrm` (mở từ `PaymentCheckoutFrm`), kiểm tra trạng thái `PAID` và ghi bản ghi vào `tblDispute`.
+3. **Học viên gửi khiếu nại lịch học đã thanh toán (`CreateDisputeView`)**:
+   - *Code thực tế*: Đã có giao diện `CreateDisputeView` (mở từ `PaymentCheckoutView`), kiểm tra trạng thái `PAID` và ghi bản ghi vào `tblDispute`.
    - *Điểm thiếu trong Doc*: Tài liệu chỉ có *CN12 (Admin duyệt khiếu nại và hoàn tiền)*, nhưng không có Use Case độc lập mô tả các bước Học viên nộp đơn khiếu nại kèm lý do và bằng chứng.
 
 ---
