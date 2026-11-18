@@ -13,11 +13,11 @@ public class User implements Serializable {
 
     private UUID id;
     private String username;
-    private String passwordHash;
+    private String password;
     private String email;
     private String displayName;
-    private String role;     // STUDENT, TUTOR, ADMIN
-    private String status;   // ACTIVE, LOCKED
+    private String role; // STUDENT, TUTOR, ADMIN
+    private String status; // ACTIVE, LOCKED
     private String phone;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -29,10 +29,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String username, String passwordHash, String displayName, String email, String role) {
+    public User(String username, String password, String displayName, String email, String role) {
         this.id = UUID.randomUUID();
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.displayName = displayName;
         this.email = email;
         this.role = role;
@@ -40,11 +40,11 @@ public class User implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public User(UUID id, String username, String passwordHash, String email, String displayName, 
-                String role, String status, String phone, Timestamp createdAt, Timestamp updatedAt) {
+    public User(UUID id, String username, String password, String email, String displayName,
+            String role, String status, String phone, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.email = email;
         this.displayName = displayName;
         this.role = role;
@@ -55,8 +55,9 @@ public class User implements Serializable {
     }
 
     public boolean verifyPassword(String password) {
-        if (this.passwordHash == null || password == null) return false;
-        return this.passwordHash.equals(password);
+        if (this.password == null || password == null)
+            return false;
+        return this.password.equals(password);
     }
 
     // Getters and Setters
@@ -76,12 +77,12 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {

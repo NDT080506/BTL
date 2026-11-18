@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS tblUser CASCADE;
 CREATE TABLE tblUser (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username VARCHAR(50) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     email VARCHAR(255),
     display_name VARCHAR(150) NOT NULL,
     role VARCHAR(20) NOT NULL CHECK (role IN ('STUDENT', 'TUTOR', 'ADMIN')),
@@ -155,7 +155,7 @@ CREATE TABLE tblActionLog (
 -- =====================================================================
 
 -- 1. Tài khoản người dùng mẫu
-INSERT INTO tblUser (id, username, password_hash, email, display_name, role, status, phone) VALUES
+INSERT INTO tblUser (id, username, password, email, display_name, role, status, phone) VALUES
 ('a0000000-0000-0000-0000-000000000001', 'admin', '123456', 'admin@tutortech.vn', 'Quản trị viên', 'ADMIN', 'ACTIVE', '0901111111'),
 ('a0000000-0000-0000-0000-000000000002', 'student01', '123456', 'student01@tutortech.vn', 'Nguyễn An', 'STUDENT', 'ACTIVE', '0912345678'),
 ('a0000000-0000-0000-0000-000000000003', 'tutor01', '123456', 'tutor01@tutortech.vn', 'Minh', 'TUTOR', 'ACTIVE', '0987654321'),

@@ -201,7 +201,7 @@ stateDiagram-v2
 
 Cơ sở dữ liệu sử dụng tiền tố **`tbl*`**, toàn bộ khóa chính dùng định danh duy nhất chuẩn **`UUID`**:
 
-1. **`tblUser`**: Tài khoản người dùng (`id`, `username`, `password_hash`, `email`, `display_name`, `role` [STUDENT, TUTOR, ADMIN], `status` [ACTIVE, LOCKED], `phone`, `created_at`, `updated_at`).
+1. **`tblUser`**: Tài khoản người dùng (`id`, `username`, `password`, `email`, `display_name`, `role` [STUDENT, TUTOR, ADMIN], `status` [ACTIVE, LOCKED], `phone`, `created_at`, `updated_at`).
 2. **`tblTutorProfile`**: Hồ sơ gia sư (`user_id` PK/FK quan hệ 1–1 với `tblUser`, `bio`, `subjects_can_teach`, `rating` mặc định 5.00).
 3. **`tblTutorApplication`**: Hồ sơ ứng tuyển gia sư (`id`, `user_id`, `bio`, `subjects_can_teach`, `cv_url`, `test_submission`, `status` [PENDING, APPROVED, REJECTED], `admin_note`).
 4. **`tblBrokeragePackage`**: Gói dịch vụ gia sư (`id`, `tutor_id`, `name`, `description`, `price` > 0, `active`).

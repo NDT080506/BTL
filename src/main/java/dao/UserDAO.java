@@ -36,7 +36,7 @@ public class UserDAO extends DAO {
      * Đăng ký tài khoản mới (CN01.03)
      */
     public boolean insert(User user) {
-        String sql = "INSERT INTO tblUser (id, username, password_hash, email, display_name, role, status, phone, created_at) " +
+        String sql = "INSERT INTO tblUser (id, username, password, email, display_name, role, status, phone, created_at) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             if (user.getId() == null) user.setId(UUID.randomUUID());
@@ -44,7 +44,7 @@ public class UserDAO extends DAO {
 
             ps.setObject(1, user.getId());
             ps.setString(2, user.getUsername());
-            ps.setString(3, user.getPasswordHash());
+            ps.setString(3, user.getPassword());
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getDisplayName());
             ps.setString(6, user.getRole());
@@ -70,7 +70,7 @@ public class UserDAO extends DAO {
             ps.setString(1, username);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    String passwordHash = rs.getString("password_hash");
+                    String passwordInDb = rs.getString("password");
                     String status = rs.getString("status");
                     
                     // Nếu tài khoản bị khóa thì không cho đăng nhập
@@ -79,7 +79,7 @@ public class UserDAO extends DAO {
                     }
 
                     // Đối chiếu mật khẩu
-                    if (passwordHash != null && passwordHash.equals(password)) {
+                    if (passwordInDb != null && passwordInDb.equals(password)) {
                         return mapResultSetToUser(rs);
                     }
                 }
@@ -234,7 +234,7 @@ public class UserDAO extends DAO {
         return new User(
             (UUID) rs.getObject("id"),
             rs.getString("username"),
-            rs.getString("password_hash"),
+            rs.getString("password"),
             rs.getString("email"),
             rs.getString("display_name"),
             rs.getString("role"),
