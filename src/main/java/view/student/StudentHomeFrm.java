@@ -133,10 +133,15 @@ public class StudentHomeFrm extends JFrame implements ActionListener {
         } else if (e.getSource() == btnApplyTutor) {
             new TutorApplicationFrm(this, currentUser).setVisible(true);
         } else if (e.getSource() == btnLogout) {
-            // Xóa người dùng hiện tại khỏi bộ nhớ
-            currentUser = null;
-            this.dispose();
-            new LoginFrm().setVisible(true);
+            int confirm = JOptionPane.showConfirmDialog(this, 
+                "Bạn có chắc chắn muốn kết thúc phiên làm việc không?", 
+                "Xác nhận kết thúc phiên", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Xóa người dùng hiện tại khỏi bộ nhớ
+                currentUser = null;
+                this.dispose();
+                new LoginFrm().setVisible(true);
+            }
         }
     }
 }

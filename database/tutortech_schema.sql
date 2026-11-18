@@ -148,5 +148,54 @@ CREATE TABLE tblActionLog (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO tbluser (username, password_hash, email, display_name, role, status) 
-VALUES ('admin', '123456', 'hung@gmail.com', 'admin', 'ADMIN', 'ACTIVE');
+-- =====================================================================
+-- DỮ LIỆU KHỞI TẠO KIỂM THỬ (SEED DATA THEO MỤC 5.1 & 5.2 BÁO CÁO BTL)
+-- Hỗ trợ chạy đầy đủ 30 ca kiểm thử hộp đen (TC01 -> TC30) và 11 ca JUnit
+-- Mật khẩu mặc định của tất cả tài khoản mẫu: 123456
+-- =====================================================================
+
+-- 1. Tài khoản người dùng mẫu
+INSERT INTO tblUser (id, username, password_hash, email, display_name, role, status, phone) VALUES
+('a0000000-0000-0000-0000-000000000001', 'admin', '123456', 'admin@tutortech.vn', 'Quản trị viên', 'ADMIN', 'ACTIVE', '0901111111'),
+('a0000000-0000-0000-0000-000000000002', 'student01', '123456', 'student01@tutortech.vn', 'Nguyễn An', 'STUDENT', 'ACTIVE', '0912345678'),
+('a0000000-0000-0000-0000-000000000003', 'tutor01', '123456', 'tutor01@tutortech.vn', 'Minh', 'TUTOR', 'ACTIVE', '0987654321'),
+('a0000000-0000-0000-0000-000000000004', 'student02', '123456', 'student02@tutortech.vn', 'Trần Bình', 'STUDENT', 'ACTIVE', '0922334455');
+
+-- 2. Hồ sơ gia sư mẫu (Minh - Môn Toán)
+INSERT INTO tblTutorProfile (user_id, bio, subjects_can_teach, rating) VALUES
+('a0000000-0000-0000-0000-000000000003', 'Gia sư chuyên Toán cấp 3 & Luyện thi đại học đạt điểm cao', 'Toán, Hình học, Đại số', 5.00);
+
+-- 3. Ví người dùng mẫu (student01: 500k, tutor01: 200k, admin: 0, student02: 100k)
+INSERT INTO tblWallet (id, user_id, available_balance) VALUES
+('b0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000001', 0),
+('b0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000002', 500000),
+('b0000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000003', 200000),
+('b0000000-0000-0000-0000-000000000004', 'a0000000-0000-0000-0000-000000000004', 100000);
+
+-- 4. Gói dịch vụ mẫu (GKN01 giá 300.000 VNĐ đang hoạt động, và 1 gói tạm ngưng)
+INSERT INTO tblBrokeragePackage (id, tutor_id, name, description, price, active) VALUES
+('c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000003', 'Gói Toán nâng cao 1 kèm 1', 'Chương trình ôn thi đại học Toán chuyên sâu', 300000, true),
+('c0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000003', 'Gói Toán cơ bản (Tạm ngưng)', 'Tạm thời không nhận học viên mới', 200000, false);
+
+-- 5. Lịch học mẫu (DG01: ACCEPTED 300k, DG02: PENDING 300k, DG03: PAID 300k)
+INSERT INTO tblBooking (id, student_id, tutor_id, package_id, scheduled_at, duration_minutes, note, status, total_price) VALUES
+('d0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000001', '2030-01-01 08:00:00', 60, 'Lịch học Toán buổi sáng (DG01)', 'ACCEPTED', 300000),
+('d0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000001', '2030-01-02 09:00:00', 60, 'Lịch học chờ xác nhận (DG02)', 'PENDING_TUTOR_CONFIRMATION', 300000),
+('d0000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000001', '2030-01-03 14:00:00', 60, 'Lịch học đã thanh toán trước (DG03)', 'PAID', 300000);
+
+-- 6. Hồ sơ ứng tuyển gia sư mẫu (HS01, HS02 ở PENDING)
+INSERT INTO tblTutorApplication (id, user_id, bio, subjects_can_teach, cv_url, test_submission, status) VALUES
+('e0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000004', 'Sinh viên ĐH Sư phạm Hà Nội, giải Nhì Toán quốc gia', 'Toán THCS, Toán THPT', 'https://cv.tutortech.vn/tranbinh_cv.pdf', 'Đã hoàn thành bài kiểm tra môn Toán 95/100', 'PENDING'),
+('e0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000004', 'Gia sư tự do kinh nghiệm 1 năm', 'Toán tiểu học', 'https://cv.tutortech.vn/cv2.pdf', 'Điểm bài test: 40/100', 'PENDING');
+
+-- 7. Khiếu nại mẫu (KN01 gắn DG03, yêu cầu hoàn 100k)
+INSERT INTO tblDispute (id, booking_id, created_by_id, reason, evidence_url, status, refund_amount) VALUES
+('f0000000-0000-0000-0000-000000000001', 'd0000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000002', 'Gia sư vào lớp muộn 20 phút và thiết bị âm thanh rè', 'https://evidence.tutortech.vn/kn01_screenshot.png', 'PENDING', 100000);
+
+-- 8. Yêu cầu rút tiền mẫu (RT01 của tutor01, rút 100k)
+INSERT INTO tblWithdrawal (id, user_id, wallet_id, amount, bank_name, account_number, account_holder, status) VALUES
+('80000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000003', 'b0000000-0000-0000-0000-000000000003', 100000, 'Vietcombank', '0123456789', 'NGUYEN VAN MINH', 'PENDING');
+
+-- 9. Nhật ký thao tác mẫu (NK01 của admin)
+INSERT INTO tblActionLog (id, user_id, action, target_type, target_id, ip_address, user_agent) VALUES
+('90000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000001', 'REVIEW_TUTOR_APPLICATION', 'TutorApplication', 'e0000000-0000-0000-0000-000000000001', '127.0.0.1', 'TutorTech-Swing-Client/1.0');

@@ -75,7 +75,7 @@ public class TutorHomeFrm extends JFrame implements ActionListener {
         JPanel actionPanel = new JPanel(new GridLayout(3, 1, 10, 10));
         actionPanel.setBorder(BorderFactory.createTitledBorder("Nghiệp vụ giảng dạy & tài chính"));
 
-        btnManageBookings = new JButton("<html><b>1. Tiếp nhận & Xử lý yêu cầu đặt lịch (CN04.01)</b> - <font color='gray'>Chấp nhận hoặc từ chối lịch học từ học viên</font></html>");
+        btnManageBookings = new JButton("<html><b>1. Tiếp nhận & Xử lý yêu cầu đặt lịch</b> - <font color='gray'>Chấp nhận hoặc từ chối lịch học từ học viên</font></html>");
         btnManageBookings.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         btnManageBookings.setFocusPainted(false);
         btnManageBookings.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -134,9 +134,17 @@ public class TutorHomeFrm extends JFrame implements ActionListener {
         } else if (e.getSource() == btnWithdrawal) {
             new CreateWithdrawalFrm(this, currentTutor, tutorWallet).setVisible(true);
         } else if (e.getSource() == btnLogout) {
-            currentTutor = null;
-            this.dispose();
-            new LoginFrm().setVisible(true);
+            int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn đăng xuất?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION
+            );
+            if (confirm == JOptionPane.YES_OPTION) {
+                currentTutor = null;
+                this.dispose();
+                new LoginFrm().setVisible(true);
+            }
         }
     }
 }

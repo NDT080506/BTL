@@ -59,12 +59,12 @@ public class AdminHomeFrm extends JFrame implements ActionListener {
         JPanel menuPanel = new JPanel(new GridLayout(3, 2, 15, 15));
         menuPanel.setBorder(BorderFactory.createTitledBorder("Các phân hệ quản trị nghiệp vụ"));
 
-        btnUsers = createMenuButton("1. Quản lý người dùng & Trạng thái tài khoản (CN06.01)", "Tra cứu tài khoản, Khóa hoặc Mở khóa tài khoản người dùng");
-        btnApplications = createMenuButton("2. Xét duyệt hồ sơ ứng tuyển gia sư (CN06.02)", "Duyệt hồ sơ PENDING, thăng cấp TUTOR và tạo TutorProfile");
-        btnPackages = createMenuButton("3. Tra cứu danh sách gói dịch vụ gia sư (CN06.03)", "Xem danh sách và chi tiết các gói kết nối gia sư đang cung cấp");
-        btnDisputes = createMenuButton("4. Xử lý khiếu nại & Hoàn tiền học phí (CN06.05)", "Thẩm tra bằng chứng, chuyển hoàn tiền trực tiếp từ ví gia sư");
-        btnWithdrawals = createMenuButton("5. Tra cứu yêu cầu rút tiền (CN06.06)", "Theo dõi thông tin rút tiền, tài khoản ngân hàng đã che số");
-        btnAuditLogs = createMenuButton("6. Tra cứu nhật ký thao tác kiểm toán (CN06.07)", "Xem lịch sử thay đổi dữ liệu, người thao tác và thời điểm");
+        btnUsers = createMenuButton("1. Quản lý người dùng & Trạng thái tài khoản", "Tra cứu tài khoản, Khóa hoặc Mở khóa tài khoản người dùng");
+        btnApplications = createMenuButton("2. Xét duyệt hồ sơ ứng tuyển gia sư", "Duyệt hồ sơ PENDING, thăng cấp TUTOR và tạo TutorProfile");
+        btnPackages = createMenuButton("3. Tra cứu danh sách gói dịch vụ gia sư", "Xem danh sách và chi tiết các gói kết nối gia sư đang cung cấp");
+        btnDisputes = createMenuButton("4. Xử lý khiếu nại & Hoàn tiền học phí", "Thẩm tra bằng chứng, chuyển hoàn tiền trực tiếp từ ví gia sư");
+        btnWithdrawals = createMenuButton("5. Tra cứu yêu cầu rút tiền", "Theo dõi thông tin rút tiền, tài khoản ngân hàng đã che số");
+        btnAuditLogs = createMenuButton("6. Tra cứu nhật ký thao tác kiểm toán", "Xem lịch sử thay đổi dữ liệu, người thao tác và thời điểm");
 
         menuPanel.add(btnUsers);
         menuPanel.add(btnApplications);
@@ -113,9 +113,17 @@ public class AdminHomeFrm extends JFrame implements ActionListener {
         } else if (e.getSource() == btnAuditLogs) {
             new AdminActionLogInquiryFrm(this).setVisible(true);
         } else if (e.getSource() == btnLogout) {
-            currentAdmin = null;
-            this.dispose();
-            new LoginFrm().setVisible(true);
+            int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn đăng xuất?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION
+            );
+            if (confirm == JOptionPane.YES_OPTION) {
+                currentAdmin = null;
+                this.dispose();
+                new LoginFrm().setVisible(true);
+            }
         }
     }
 }
