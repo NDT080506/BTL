@@ -17,6 +17,7 @@
 8. [Hướng dẫn Cài đặt & Khởi chạy](#8-hướng-dẫn-cài-đặt--khởi-chạy)
 9. [Dữ liệu Khởi tạo Kiểm thử (Seed Data Chuẩn BTL)](#9-dữ-liệu-khởi-tạo-kiểm-thử-seed-data-chuẩn-btl)
 10. [Kịch bản Kiểm thử & Demo Khép kín Toàn Hệ thống](#10-kịch-bản-kiểm-thử--demo-khép-kín-toàn-hệ-thống)
+11. [Phân tích Các Luồng Nghiệp vụ Bị Thiếu & Định hướng Hoàn thiện](#11-phân-tích-các-luồng-nghiệp-vụ-bị-thiếu--định-hướng-hoàn-thiện)
 
 ---
 
@@ -397,3 +398,35 @@ Tất cả các tài khoản mẫu đều dùng chung mật khẩu mặc định
 1. Gia sư `tutor01` vào **"3. Yêu cầu rút tiền về ngân hàng"** $\rightarrow$ Nhập số tiền rút 100.000 VNĐ và thông tin tài khoản ngân hàng $\rightarrow$ Bấm gửi. Tiền trong ví gia sư bị trừ ngay lập tức.
 2. Đăng nhập `admin` $\rightarrow$ Vào **"5. Tra cứu yêu cầu rút tiền"** $\rightarrow$ Thấy yêu cầu ở trạng thái `PENDING` với số tài khoản hiển thị che bảo mật dạng `••••1234`.
 3. Admin vào **"6. Tra cứu nhật ký thao tác kiểm toán"** để kiểm tra lịch sử tất cả các hành động vừa diễn ra trong hệ thống (`REVIEW_TUTOR_APPLICATION`, `RESOLVE_DISPUTE`, `UPDATE_USER_STATUS`...).
+
+---
+
+## 11. PHÂN TÍCH CÁC LUỒNG NGHIỆP VỤ BỊ THIẾU & ĐỊNH HƯỚNG HOÀN THIỆN
+
+Trong quá trình phân tích và đối chiếu toàn diện giữa **Tài liệu báo cáo BTL.docx**, **Mã nguồn thực tế (Codebase)** và **Nghiệp vụ thực tế của một nền tảng EdTech**, hệ thống ghi nhận các nhóm luồng còn thiếu:
+
+---
+
+### 11.1: Các luồng TRONG CODE ĐÃ LÀM nhưng BÁO CÁO BTL.DOCX BỊ THIẾU
+Do tài liệu `BTL.docx` bị khống chế cứng trong **hạn ngạch 14 chức năng (CN01 – CN14)** và tác giả đã dành tới 6 chức năng cho Quản trị viên (Admin), nên có **3 luồng nghiệp vụ cốt lõi của Học viên và Gia sư bị gạt ra khỏi danh mục Use Case chính thức**:
+
+1. **Gia sư thiết lập & quản lý gói dịch vụ (`TutorPackageManagerFrm`)**:
+   - *Code thực tế*: Đã có giao diện `TutorPackageManagerFrm` và hàm `BrokeragePackageDAO.insert()`. Gia sư tự đặt tên gói, mô tả, mức giá và trạng thái hoạt động.
+   - *Điểm thiếu trong Doc*: Tài liệu chỉ có *CN11 (Admin tra cứu gói)* và *CN03 (Học viên xem gói)*, nhưng không có Use Case nào cho người trực tiếp tạo ra gói học. Doc chỉ nói lướt qua một câu: *"Gói dịch vụ do gia sư quản lý... là đầu vào cho các chức năng quản trị"*.
+2. **Gia sư tạo yêu cầu rút tiền về ngân hàng (`CreateWithdrawalFrm`)**:
+   - *Code thực tế*: Đã có giao diện `CreateWithdrawalFrm`, `WithdrawalDAO.insert()` và trừ tiền ví qua `WalletDAO.debit()`.
+   - *Điểm thiếu trong Doc*: Tài liệu chỉ có *CN13 (Admin tra cứu rút tiền)*, nhưng không có Use Case mô tả quy trình Gia sư nộp yêu cầu rút tiền. Doc mặc định coi bản ghi `RT01` đã tự có sẵn trong cơ sở dữ liệu kiểm thử.
+3. **Học viên gửi khiếu nại lịch học đã thanh toán (`CreateDisputeFrm`)**:
+   - *Code thực tế*: Đã có giao diện `CreateDisputeFrm` (mở từ `PaymentCheckoutFrm`), kiểm tra trạng thái `PAID` và ghi bản ghi vào `tblDispute`.
+   - *Điểm thiếu trong Doc*: Tài liệu chỉ có *CN12 (Admin duyệt khiếu nại và hoàn tiền)*, nhưng không có Use Case độc lập mô tả các bước Học viên nộp đơn khiếu nại kèm lý do và bằng chứng.
+
+---
+
+
+
+
+
+
+
+
+
