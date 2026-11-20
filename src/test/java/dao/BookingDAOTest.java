@@ -31,4 +31,15 @@ public class BookingDAOTest {
         boolean available = bookingDAO.isScheduleAvailable(randomTutorId, futureTime, 60);
         assertTrue("Khung giờ trống phải trả về true", available);
     }
+
+    @Test
+    public void testIsScheduleAvailable_ConflictPending() {
+        UserDAO userDAO = new UserDAO();
+        model.User tutor = userDAO.checkLogin("tutor02", "123456");
+        if (tutor != null) {
+            Timestamp conflictTime = Timestamp.valueOf("2030-01-01 08:30:00");
+            boolean available = bookingDAO.isScheduleAvailable(tutor.getId(), conflictTime, 60);
+            assertFalse("Khung giờ trùng với lịch PENDING của gia sư phải trả về false", available);
+        }
+    }
 }

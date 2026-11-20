@@ -26,10 +26,10 @@ public class BookingDAO extends DAO {
         Timestamp scheduledEnd = new Timestamp(endMs);
 
         String sql = "SELECT 1 FROM tblBooking " +
-                     "WHERE tutor_id = ? " +
-                     "AND status IN ('ACCEPTED', 'PAID') " +
-                     "AND ((scheduled_at <= ? AND (scheduled_at + (duration_minutes * INTERVAL '1 minute')) > ?) " +
-                     "  OR (scheduled_at < ? AND scheduled_at >= ?))";
+                "WHERE tutor_id = ? " +
+                "AND status IN ('PENDING_TUTOR_CONFIRMATION', 'ACCEPTED', 'PAID') " +
+                "AND ((scheduled_at <= ? AND (scheduled_at + (duration_minutes * INTERVAL '1 minute')) > ?) " +
+                "  OR (scheduled_at < ? AND scheduled_at >= ?))";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, tutorId);
@@ -53,12 +53,15 @@ public class BookingDAO extends DAO {
      */
     public boolean insert(Booking booking) {
         String sql = "INSERT INTO tblBooking (id, student_id, tutor_id, package_id, scheduled_at, " +
-                     "duration_minutes, note, status, total_price, created_at) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "duration_minutes, note, status, total_price, created_at) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            if (booking.getId() == null) booking.setId(UUID.randomUUID());
-            if (booking.getCreatedAt() == null) booking.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-            if (booking.getStatus() == null) booking.setStatus("PENDING_TUTOR_CONFIRMATION");
+            if (booking.getId() == null)
+                booking.setId(UUID.randomUUID());
+            if (booking.getCreatedAt() == null)
+                booking.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+            if (booking.getStatus() == null)
+                booking.setStatus("PENDING_TUTOR_CONFIRMATION");
 
             ps.setObject(1, booking.getId());
             ps.setObject(2, booking.getStudentId());
@@ -84,7 +87,7 @@ public class BookingDAO extends DAO {
     public List<Booking> findPendingByTutor(UUID tutorId) {
         List<Booking> list = new ArrayList<>();
         String sql = "SELECT * FROM tblBooking WHERE tutor_id = ? AND status = 'PENDING_TUTOR_CONFIRMATION' " +
-                     "ORDER BY scheduled_at ASC";
+                "ORDER BY scheduled_at ASC";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, tutorId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -155,7 +158,7 @@ public class BookingDAO extends DAO {
      */
     public boolean updateResponse(UUID bookingId, String newStatus) {
         String sql = "UPDATE tblBooking SET status = ?, updated_at = CURRENT_TIMESTAMP " +
-                     "WHERE id = ? AND status = 'PENDING_TUTOR_CONFIRMATION'";
+                "WHERE id = ? AND status = 'PENDING_TUTOR_CONFIRMATION'";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, newStatus);
             ps.setObject(2, bookingId);
@@ -183,17 +186,16 @@ public class BookingDAO extends DAO {
 
     private Booking mapResultSetToBooking(ResultSet rs) throws SQLException {
         return new Booking(
-            (UUID) rs.getObject("id"),
-            (UUID) rs.getObject("student_id"),
-            (UUID) rs.getObject("tutor_id"),
-            (UUID) rs.getObject("package_id"),
-            rs.getTimestamp("scheduled_at"),
-            rs.getInt("duration_minutes"),
-            rs.getString("note"),
-            rs.getString("status"),
-            rs.getLong("total_price"),
-            rs.getTimestamp("created_at"),
-            rs.getTimestamp("updated_at")
-        );
+                (UUID) rs.getObject("id"),
+                (UUID) rs.getObject("student_id"),
+                (UUID) rs.getObject("tutor_id"),
+                (UUID) rs.getObject("package_id"),
+                rs.getTimestamp("scheduled_at"),
+                rs.getInt("duration_minutes"),
+                rs.getString("note"),
+                rs.getString("status"),
+                rs.getLong("total_price"),
+                rs.getTimestamp("created_at"),
+                rs.getTimestamp("updated_at"));
     }
 }
