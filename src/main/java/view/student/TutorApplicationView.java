@@ -19,18 +19,15 @@ public class TutorApplicationView extends JDialog implements ActionListener {
 
     private TutorApplication existingApp;
 
-    // View components
     private JPanel cardPanel;
     private CardLayout cardLayout;
 
-    // Form nộp mới
     private JTextArea txtBio;
     private JTextField txtSubjects;
     private JTextField txtCvUrl;
     private JTextField txtTestScore;
     private JButton btnSubmit;
 
-    // Panel theo dõi hồ sơ cũ
     private JLabel lblStatus;
     private JLabel lblSubmittedAt;
     private JTextArea txtAdminNote;
@@ -64,17 +61,14 @@ public class TutorApplicationView extends JDialog implements ActionListener {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        // 1. PANEL FORM NỘP MỚI
         JPanel newAppPanel = createNewApplicationPanel();
         cardPanel.add(newAppPanel, "NEW_APP");
 
-        // 2. PANEL THEO DÕI HỒ SƠ ĐÃ NỘP
         JPanel viewAppPanel = createViewApplicationPanel();
         cardPanel.add(viewAppPanel, "VIEW_APP");
 
         mainPanel.add(cardPanel, BorderLayout.CENTER);
 
-        // Bottom
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnClose = new JButton("Đóng");
         btnClose.addActionListener(e -> this.dispose());
@@ -200,7 +194,7 @@ public class TutorApplicationView extends JDialog implements ActionListener {
             TutorApplication app = new TutorApplication(student.getId(), bio, subjects, cvUrl, testScore);
             boolean success = appDAO.insert(app);
             if (success) {
-                // Ghi nhận nhật ký quản trị ActionLog
+
                 actionLogDAO.insert(new ActionLog(student.getId(), "APPLY_TUTOR", "TutorApplication", app.getId()));
 
                 JOptionPane.showMessageDialog(this, "Nộp hồ sơ ứng tuyển gia sư thành công!\nHồ sơ đang được chuyển đến Quản trị viên để xét duyệt.", "Thành công", JOptionPane.INFORMATION_MESSAGE);

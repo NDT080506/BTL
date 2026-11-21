@@ -49,7 +49,6 @@ public class TutorDetailView extends JDialog implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(12, 12));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Info Panel
         JPanel infoPanel = new JPanel(new BorderLayout(8, 8));
         infoPanel.setBorder(BorderFactory.createTitledBorder("Thông tin gia sư"));
 
@@ -81,7 +80,6 @@ public class TutorDetailView extends JDialog implements ActionListener {
 
         mainPanel.add(infoPanel, BorderLayout.NORTH);
 
-        // Packages Panel
         JPanel packagesPanel = new JPanel(new BorderLayout(8, 8));
         packagesPanel.setBorder(BorderFactory.createTitledBorder("Các gói dịch vụ đang cung cấp"));
 
@@ -97,7 +95,6 @@ public class TutorDetailView extends JDialog implements ActionListener {
 
         mainPanel.add(packagesPanel, BorderLayout.CENTER);
 
-        // Bottom Buttons
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         btnBook = new JButton("Đặt lịch với gói này");
         btnBook.setFont(new Font("Segoe UI", Font.BOLD, 13));

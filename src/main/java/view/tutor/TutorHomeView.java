@@ -39,7 +39,6 @@ public class TutorHomeView extends JFrame implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(new Color(240, 250, 245));
         headerPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -68,7 +67,6 @@ public class TutorHomeView extends JFrame implements ActionListener {
         headerPanel.add(btnRefresh, BorderLayout.EAST);
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // Center Action Panel
         JPanel actionPanel = new JPanel(new GridLayout(3, 1, 10, 10));
         actionPanel.setBorder(BorderFactory.createTitledBorder("Nghiệp vụ giảng dạy & tài chính"));
 
@@ -96,7 +94,6 @@ public class TutorHomeView extends JFrame implements ActionListener {
 
         mainPanel.add(actionPanel, BorderLayout.CENTER);
 
-        // Footer / Logout
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnLogout = new JButton("Đăng xuất");
         btnLogout.setFont(new Font("Segoe UI", Font.PLAIN, 12));

@@ -36,7 +36,6 @@ public class MockPaymentGatewayView extends JDialog implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
 
-        // Header
         JPanel header = new JPanel(new GridLayout(2, 1, 4, 4));
         JLabel lblTitle = new JLabel("CỔNG THANH TOÁN MÔ PHỎNG", JLabel.CENTER);
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -50,7 +49,6 @@ public class MockPaymentGatewayView extends JDialog implements ActionListener {
         header.add(lblSub);
         mainPanel.add(header, BorderLayout.NORTH);
 
-        // Content
         JPanel contentPanel = new JPanel(new GridLayout(4, 1, 8, 8));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -75,7 +73,6 @@ public class MockPaymentGatewayView extends JDialog implements ActionListener {
 
         mainPanel.add(contentPanel, BorderLayout.CENTER);
 
-        // Buttons
         JPanel btnPanel = new JPanel(new GridLayout(1, 2, 15, 0));
         btnConfirm = new JButton("Xác nhận kết quả");
         btnConfirm.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -102,12 +99,12 @@ public class MockPaymentGatewayView extends JDialog implements ActionListener {
             boolean ok = txDAO.confirmDeposit(referenceCode, result);
 
             if (ok) {
-                JOptionPane.showMessageDialog(this, 
-                    "Cổng thanh toán phản hồi: Giao dịch thành công!\nSố dư đã được cộng vào ví của bạn.", 
+                JOptionPane.showMessageDialog(this,
+                    "Cổng thanh toán phản hồi: Giao dịch thành công!\nSố dư đã được cộng vào ví của bạn.",
                     "Nạp tiền thành công", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, 
-                    "Giao dịch đã kết thúc với trạng thái: " + result + ".\nSố dư ví không thay đổi.", 
+                JOptionPane.showMessageDialog(this,
+                    "Giao dịch đã kết thúc với trạng thái: " + result + ".\nSố dư ví không thay đổi.",
                     "Kết quả giao dịch", JOptionPane.WARNING_MESSAGE);
             }
             this.dispose();

@@ -28,7 +28,7 @@ public class TutorProfile implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public TutorProfile(UUID userId, String bio, String subjectsCanTeach, double rating, 
+    public TutorProfile(UUID userId, String bio, String subjectsCanTeach, double rating,
                         Timestamp createdAt, Timestamp updatedAt) {
         this.userId = userId;
         this.bio = bio;
@@ -38,7 +38,6 @@ public class TutorProfile implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    // Getters and Setters
     public UUID getUserId() {
         return userId;
     }

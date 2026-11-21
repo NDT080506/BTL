@@ -31,7 +31,6 @@ public class ApplicationAndDisputeDAOTest {
         User student = userDAO.checkLogin("student01", "123456");
         assertNotNull("student01 phải tồn tại", student);
 
-        // Xóa hồ sơ pending cũ nếu có để tránh trùng
         TutorApplication existing = applicationDAO.findByUserId(student.getId());
         if (existing != null && "PENDING".equalsIgnoreCase(existing.getStatus())) {
             applicationDAO.deletePending(existing.getId());
@@ -61,7 +60,6 @@ public class ApplicationAndDisputeDAOTest {
         assertNotNull("student01 phải tồn tại", student);
         assertNotNull("tutor01 phải tồn tại", tutor);
 
-        // Tạo một booking mẫu để khiếu nại thỏa mãn ràng buộc khóa ngoại
         Booking booking = new Booking(student.getId(), tutor.getId(), null,
                 new Timestamp(System.currentTimeMillis() + 172800000L), 60, "Buổi học khiếu nại", 300000L);
         boolean bookSuccess = bookingDAO.insert(booking);

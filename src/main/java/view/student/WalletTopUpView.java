@@ -46,22 +46,18 @@ public class WalletTopUpView extends JDialog implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
-        // Header
         JLabel lblTitle = new JLabel("NẠP TIỀN VÀO VÍ HỌC VIÊN", JLabel.CENTER);
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 16));
         lblTitle.setForeground(new Color(24, 119, 242));
         mainPanel.add(lblTitle, BorderLayout.NORTH);
 
-        // Center Content
         JPanel centerPanel = new JPanel(new GridLayout(4, 1, 10, 10));
 
-        // Row 1: Số dư hiện tại
         lblCurrentBalance = new JLabel("Số dư hiện tại: Đang tải...");
         lblCurrentBalance.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblCurrentBalance.setForeground(new Color(40, 167, 69));
         centerPanel.add(lblCurrentBalance);
 
-        // Row 2: Chọn nhanh số tiền
         JPanel quickPanel = new JPanel(new GridLayout(1, 4, 8, 0));
         btn100k = new JButton("100k");
         btn200k = new JButton("200k");
@@ -79,7 +75,6 @@ public class WalletTopUpView extends JDialog implements ActionListener {
         quickPanel.add(btn1000k);
         centerPanel.add(quickPanel);
 
-        // Row 3: Nhập số tiền tùy chỉnh
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         inputPanel.add(new JLabel("Số tiền nạp (VNĐ):"));
         txtAmount = new JTextField("200000", 12);
@@ -87,7 +82,6 @@ public class WalletTopUpView extends JDialog implements ActionListener {
         inputPanel.add(txtAmount);
         centerPanel.add(inputPanel);
 
-        // Row 4: Ghi chú
         JLabel lblNote = new JLabel("<html><i>Lưu ý: Quá trình nạp tiền sử dụng Cổng thanh toán mô phỏng (Mock Payment) để thử nghiệm nghiệp vụ.</i></html>");
         lblNote.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         lblNote.setForeground(Color.GRAY);
@@ -95,7 +89,6 @@ public class WalletTopUpView extends JDialog implements ActionListener {
 
         mainPanel.add(centerPanel, BorderLayout.CENTER);
 
-        // Buttons
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 15, 0));
         btnSubmit = new JButton("Tiếp tục thanh toán");
         btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -151,12 +144,11 @@ public class WalletTopUpView extends JDialog implements ActionListener {
                 return;
             }
 
-            // Tạo yêu cầu nạp tiền PENDING kèm referenceCode
             String refCode = "DEP-" + System.currentTimeMillis();
             PaymentTransaction pendingTx = txDAO.createPendingDeposit(currentWallet, amount, refCode);
 
             if (pendingTx != null) {
-                // Chuyển sang màn hình Cổng thanh toán mô phỏng
+
                 new MockPaymentGatewayView(this, refCode, amount).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Không thể tạo yêu cầu nạp tiền!", "Lỗi", JOptionPane.ERROR_MESSAGE);

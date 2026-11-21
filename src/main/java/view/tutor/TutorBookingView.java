@@ -47,13 +47,11 @@ public class TutorBookingView extends JDialog implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(12, 12));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Header
         JLabel lblTitle = new JLabel("CÁC YÊU CẦU ĐẶT LỊCH ĐANG CHỜ PHẢN HỒI", JLabel.LEFT);
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
         lblTitle.setForeground(new Color(24, 119, 242));
         mainPanel.add(lblTitle, BorderLayout.NORTH);
 
-        // Table
         String[] cols = {"STT", "Học viên", "Thời gian học", "Thời lượng", "Học phí", "Ghi chú của học viên"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
@@ -64,7 +62,6 @@ public class TutorBookingView extends JDialog implements ActionListener {
         tblBookings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mainPanel.add(new JScrollPane(tblBookings), BorderLayout.CENTER);
 
-        // Buttons
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         btnRefresh = new JButton("Làm mới danh sách");
         btnRefresh.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -136,16 +133,16 @@ public class TutorBookingView extends JDialog implements ActionListener {
             String actionName = isAccept ? "Chấp nhận" : "Từ chối";
             String newStatus = isAccept ? "ACCEPTED" : "REJECTED";
 
-            int confirm = JOptionPane.showConfirmDialog(this, 
-                "Bạn có chắc chắn muốn " + actionName + " yêu cầu đặt lịch này không?", 
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc chắn muốn " + actionName + " yêu cầu đặt lịch này không?",
                 "Xác nhận", JOptionPane.YES_NO_OPTION);
 
             if (confirm == JOptionPane.YES_OPTION) {
                 boolean ok = bookingDAO.updateResponse(booking.getId(), newStatus);
                 if (ok) {
-                    JOptionPane.showMessageDialog(this, 
+                    JOptionPane.showMessageDialog(this,
                         "Đã " + actionName.toLowerCase() + " yêu cầu đặt lịch thành công!" +
-                        (isAccept ? "\nHọc viên có thể thanh toán trực tiếp vào ví của bạn." : ""), 
+                        (isAccept ? "\nHọc viên có thể thanh toán trực tiếp vào ví của bạn." : ""),
                         "Thành công", JOptionPane.INFORMATION_MESSAGE);
                     loadPendingBookings();
                 } else {

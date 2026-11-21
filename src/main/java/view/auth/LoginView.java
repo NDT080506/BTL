@@ -34,7 +34,6 @@ public class LoginView extends JFrame implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
 
-        // Header Title
         JLabel lblTitle = new JLabel("TUTORTECH", JLabel.CENTER);
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 22));
         lblTitle.setForeground(new Color(24, 119, 242));
@@ -47,7 +46,6 @@ public class LoginView extends JFrame implements ActionListener {
         headerPanel.add(lblSubtitle);
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // Form Fields
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(6, 6, 6, 6);
@@ -81,7 +79,6 @@ public class LoginView extends JFrame implements ActionListener {
 
         mainPanel.add(formPanel, BorderLayout.CENTER);
 
-        // Buttons
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 15, 0));
         btnLogin = new JButton("Đăng nhập");
         btnLogin.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -99,7 +96,6 @@ public class LoginView extends JFrame implements ActionListener {
         buttonPanel.add(btnRegister);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Gợi ý tài khoản mẫu
         txtUsername.setText("student01");
         txtPassword.setText("123456");
 
@@ -120,9 +116,8 @@ public class LoginView extends JFrame implements ActionListener {
             User user = userDAO.checkLogin(username, password);
             if (user != null) {
                 lblMessage.setText("");
-                this.dispose(); // Đóng LoginView
+                this.dispose();
 
-                // Điều hướng giao diện theo vai trò (Role-based Navigation)
                 String role = user.getRole();
                 if ("ADMIN".equalsIgnoreCase(role)) {
                     new AdminHomeView(user).setVisible(true);

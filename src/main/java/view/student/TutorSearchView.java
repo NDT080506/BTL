@@ -44,7 +44,6 @@ public class TutorSearchView extends JDialog implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Filter panel
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         filterPanel.setBorder(BorderFactory.createTitledBorder("Bộ lọc tìm kiếm"));
 
@@ -65,7 +64,6 @@ public class TutorSearchView extends JDialog implements ActionListener {
 
         mainPanel.add(filterPanel, BorderLayout.NORTH);
 
-        // Table panel
         String[] columnNames = {"STT", "Họ và tên", "Môn giảng dạy", "Đánh giá", "Email", "ID"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -79,7 +77,6 @@ public class TutorSearchView extends JDialog implements ActionListener {
         tblTutors.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
         tblTutors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // Ẩn cột ID
         tblTutors.getColumnModel().getColumn(5).setMinWidth(0);
         tblTutors.getColumnModel().getColumn(5).setMaxWidth(0);
         tblTutors.getColumnModel().getColumn(5).setWidth(0);
@@ -87,7 +84,6 @@ public class TutorSearchView extends JDialog implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(tblTutors);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Bottom panel
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         btnViewDetail = new JButton("Xem hồ sơ chi tiết & Chọn gói học");
         btnViewDetail.setFont(new Font("Segoe UI", Font.BOLD, 13));

@@ -57,7 +57,6 @@ public class BookingRequestView extends JDialog implements ActionListener {
         gbc.insets = new Insets(6, 6, 6, 6);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Gia sư
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.35;
         formPanel.add(new JLabel("Gia sư:"), gbc);
         JLabel lblTutorName = new JLabel(tutor.getDisplayName());
@@ -65,7 +64,6 @@ public class BookingRequestView extends JDialog implements ActionListener {
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.65;
         formPanel.add(lblTutorName, gbc);
 
-        // Gói dịch vụ
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Gói học đã chọn:"), gbc);
         JLabel lblPkg = new JLabel(brokeragePackage.getName());
@@ -73,7 +71,6 @@ public class BookingRequestView extends JDialog implements ActionListener {
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(lblPkg, gbc);
 
-        // Học phí
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Học phí dự kiến:"), gbc);
         lblTotalAmount = new JLabel(String.format("%,d VNĐ", brokeragePackage.getPrice()));
@@ -82,11 +79,9 @@ public class BookingRequestView extends JDialog implements ActionListener {
         gbc.gridx = 1; gbc.gridy = 2;
         formPanel.add(lblTotalAmount, gbc);
 
-        // Ngày giờ học
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Ngày giờ học (*):"), gbc);
-        
-        // Mặc định là 19:00 ngày mai
+
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.HOUR_OF_DAY, 19);
@@ -95,7 +90,6 @@ public class BookingRequestView extends JDialog implements ActionListener {
         gbc.gridx = 1; gbc.gridy = 3;
         formPanel.add(txtDateTime, gbc);
 
-        // Thời lượng
         gbc.gridx = 0; gbc.gridy = 4;
         formPanel.add(new JLabel("Thời lượng (phút):"), gbc);
         cmbDuration = new JComboBox<>(new Integer[]{60, 90, 120, 150});
@@ -103,7 +97,6 @@ public class BookingRequestView extends JDialog implements ActionListener {
         gbc.gridx = 1; gbc.gridy = 4;
         formPanel.add(cmbDuration, gbc);
 
-        // Ghi chú
         gbc.gridx = 0; gbc.gridy = 5;
         formPanel.add(new JLabel("Ghi chú cho gia sư:"), gbc);
         txtNote = new JTextArea(3, 15);
@@ -115,7 +108,6 @@ public class BookingRequestView extends JDialog implements ActionListener {
 
         mainPanel.add(formPanel, BorderLayout.CENTER);
 
-        // Buttons
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 15, 0));
         btnSubmit = new JButton("Xác nhận gửi yêu cầu");
         btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -154,22 +146,20 @@ public class BookingRequestView extends JDialog implements ActionListener {
                 return;
             }
 
-            // Kiểm tra trùng lịch gia sư
             boolean available = bookingDAO.isScheduleAvailable(tutor.getId(), scheduledAt, duration);
             if (!available) {
                 JOptionPane.showMessageDialog(this, "Gia sư đã có lịch dạy trùng vào khung giờ này!\nVui lòng chọn thời gian khác.", "Trùng lịch", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Tạo Booking
-            Booking booking = new Booking(student.getId(), tutor.getId(), brokeragePackage.getId(), 
+            Booking booking = new Booking(student.getId(), tutor.getId(), brokeragePackage.getId(),
                                           scheduledAt, duration, note, brokeragePackage.getPrice());
             boolean success = bookingDAO.insert(booking);
 
             if (success) {
-                JOptionPane.showMessageDialog(this, 
-                    "Gửi yêu cầu đặt lịch thành công!\nMã lịch đặt: " + booking.getId() + 
-                    "\nTrạng thái: Đang chờ gia sư phản hồi.\n(Chưa trừ tiền ví, bạn chỉ thanh toán sau khi gia sư chấp nhận lịch).", 
+                JOptionPane.showMessageDialog(this,
+                    "Gửi yêu cầu đặt lịch thành công!\nMã lịch đặt: " + booking.getId() +
+                    "\nTrạng thái: Đang chờ gia sư phản hồi.\n(Chưa trừ tiền ví, bạn chỉ thanh toán sau khi gia sư chấp nhận lịch).",
                     "Thành công", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } else {

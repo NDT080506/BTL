@@ -49,11 +49,9 @@ public class TutorPackageManagerView extends JDialog implements ActionListener {
         lblTitle.setForeground(new Color(24, 119, 242));
         mainPanel.add(lblTitle, BorderLayout.NORTH);
 
-        // Center Split
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setResizeWeight(0.6);
 
-        // Table
         String[] cols = {"STT", "Tên gói", "Mô tả", "Học phí", "Trạng thái"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
@@ -63,7 +61,6 @@ public class TutorPackageManagerView extends JDialog implements ActionListener {
         tblPackages.setRowHeight(25);
         splitPane.setTopComponent(new JScrollPane(tblPackages));
 
-        // Form thêm mới
         JPanel addPanel = new JPanel(new GridBagLayout());
         addPanel.setBorder(BorderFactory.createTitledBorder("Thêm gói dịch vụ mới"));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -102,7 +99,6 @@ public class TutorPackageManagerView extends JDialog implements ActionListener {
         splitPane.setBottomComponent(addPanel);
         mainPanel.add(splitPane, BorderLayout.CENTER);
 
-        // Bottom
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnRefresh = new JButton("Làm mới");
         btnRefresh.addActionListener(this);

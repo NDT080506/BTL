@@ -58,13 +58,11 @@ public class UserDAO extends DAO {
                 if (rs.next()) {
                     String passwordInDb = rs.getString("password");
                     String status = rs.getString("status");
-                    
-                    // Nếu tài khoản bị khóa thì không cho đăng nhập
+
                     if ("LOCKED".equalsIgnoreCase(status)) {
                         return null;
                     }
 
-                    // Đối chiếu mật khẩu
                     if (passwordInDb != null && passwordInDb.equals(password)) {
                         return mapResultSetToUser(rs);
                     }
@@ -76,9 +74,6 @@ public class UserDAO extends DAO {
         return null;
     }
 
-    /**
-     * Lấy User theo ID
-     */
     public User findById(UUID id) {
         String sql = "SELECT * FROM tblUser WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {

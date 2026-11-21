@@ -60,7 +60,6 @@ public class CreateWithdrawalView extends JDialog implements ActionListener {
         gbc.insets = new Insets(6, 6, 6, 6);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Số dư hiện tại
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.35;
         formPanel.add(new JLabel("Số dư ví hiện tại:"), gbc);
         lblBal = new JLabel(String.format("%,d VNĐ", wallet.getAvailableBalance()));
@@ -69,28 +68,24 @@ public class CreateWithdrawalView extends JDialog implements ActionListener {
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.65;
         formPanel.add(lblBal, gbc);
 
-        // Số tiền muốn rút
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Số tiền muốn rút (*):"), gbc);
         txtAmount = new JTextField("500000");
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(txtAmount, gbc);
 
-        // Ngân hàng
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Ngân hàng nhận (*):"), gbc);
         cmbBank = new JComboBox<>(new String[]{"Vietcombank (VCB)", "Techcombank (TCB)", "MB Bank", "BIDV", "VietinBank", "ACB"});
         gbc.gridx = 1; gbc.gridy = 2;
         formPanel.add(cmbBank, gbc);
 
-        // Số tài khoản
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Số tài khoản (*):"), gbc);
         txtAccountNumber = new JTextField("0011004567890");
         gbc.gridx = 1; gbc.gridy = 3;
         formPanel.add(txtAccountNumber, gbc);
 
-        // Chủ tài khoản
         gbc.gridx = 0; gbc.gridy = 4;
         formPanel.add(new JLabel("Tên chủ tài khoản (*):"), gbc);
         txtAccountHolder = new JTextField(tutor.getDisplayName().toUpperCase());
@@ -99,7 +94,6 @@ public class CreateWithdrawalView extends JDialog implements ActionListener {
 
         mainPanel.add(formPanel, BorderLayout.CENTER);
 
-        // Buttons
         JPanel btnPanel = new JPanel(new GridLayout(1, 2, 15, 0));
         btnSubmit = new JButton("Gửi yêu cầu rút");
         btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -148,9 +142,9 @@ public class CreateWithdrawalView extends JDialog implements ActionListener {
             boolean ok = withdrawalDAO.insert(wd);
             if (ok) {
                 actionLogDAO.insert(new ActionLog(tutor.getId(), "CREATE_WITHDRAWAL", "Withdrawal", wd.getId()));
-                JOptionPane.showMessageDialog(this, 
-                    "Tạo yêu cầu rút tiền thành công!\nSố tiền: " + String.format("%,d VNĐ", amount) + 
-                    "\nTrạng thái: Đang chờ xử lý.\nQuản trị viên có thể tra cứu tại mục Yêu cầu rút tiền.", 
+                JOptionPane.showMessageDialog(this,
+                    "Tạo yêu cầu rút tiền thành công!\nSố tiền: " + String.format("%,d VNĐ", amount) +
+                    "\nTrạng thái: Đang chờ xử lý.\nQuản trị viên có thể tra cứu tại mục Yêu cầu rút tiền.",
                     "Thành công", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
                 parent.loadWallet();

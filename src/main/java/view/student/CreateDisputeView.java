@@ -55,7 +55,6 @@ public class CreateDisputeView extends JDialog implements ActionListener {
         gbc.insets = new Insets(6, 6, 6, 6);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Mã booking
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.35;
         formPanel.add(new JLabel("Mã lịch học:"), gbc);
         lblBookingCode = new JLabel(booking.getId().toString().substring(0, 8) + "...");
@@ -63,21 +62,18 @@ public class CreateDisputeView extends JDialog implements ActionListener {
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.65;
         formPanel.add(lblBookingCode, gbc);
 
-        // Số tiền đề nghị hoàn
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Số tiền đề nghị hoàn:"), gbc);
         txtRefundAmount = new JTextField(String.valueOf(booking.getTotalPrice()));
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(txtRefundAmount, gbc);
 
-        // Đường dẫn bằng chứng
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Đường dẫn bằng chứng:"), gbc);
         txtEvidenceUrl = new JTextField("https://minhchung.tutortech.vn/evidence-01.png");
         gbc.gridx = 1; gbc.gridy = 2;
         formPanel.add(txtEvidenceUrl, gbc);
 
-        // Lý do khiếu nại
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Lý do khiếu nại (*):"), gbc);
         txtReason = new JTextArea(4, 15);
@@ -89,7 +85,6 @@ public class CreateDisputeView extends JDialog implements ActionListener {
 
         mainPanel.add(formPanel, BorderLayout.CENTER);
 
-        // Buttons
         JPanel btnPanel = new JPanel(new GridLayout(1, 2, 15, 0));
         btnSubmit = new JButton("Gửi khiếu nại");
         btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -137,8 +132,8 @@ public class CreateDisputeView extends JDialog implements ActionListener {
             boolean ok = disputeDAO.insert(dispute);
             if (ok) {
                 actionLogDAO.insert(new ActionLog(student.getId(), "CREATE_DISPUTE", "Dispute", dispute.getId()));
-                JOptionPane.showMessageDialog(this, 
-                    "Gửi khiếu nại thành công!\nQuản trị viên sẽ thẩm tra và xử lý hoàn tiền cho bạn.", 
+                JOptionPane.showMessageDialog(this,
+                    "Gửi khiếu nại thành công!\nQuản trị viên sẽ thẩm tra và xử lý hoàn tiền cho bạn.",
                     "Thành công", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } else {
