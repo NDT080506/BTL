@@ -11,8 +11,8 @@ public class PaymentTransaction implements Serializable {
     private UUID sourceWalletId;
     private UUID destinationWalletId;
     private UUID bookingId;
-    private String type;   // DEPOSIT, TRANSFER, REFUND
-    private String status; // PENDING, SUCCESS, FAILED
+    private String type;
+    private String status;
     private long amount;
     private String referenceCode;
     private Long balanceAfter;
@@ -24,7 +24,7 @@ public class PaymentTransaction implements Serializable {
     public PaymentTransaction() {
     }
 
-    public PaymentTransaction(UUID sourceWalletId, UUID destinationWalletId, UUID bookingId, 
+    public PaymentTransaction(UUID sourceWalletId, UUID destinationWalletId, UUID bookingId,
                               String type, long amount, String referenceCode) {
         this.id = UUID.randomUUID();
         this.sourceWalletId = sourceWalletId;
@@ -37,8 +37,8 @@ public class PaymentTransaction implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public PaymentTransaction(UUID id, UUID sourceWalletId, UUID destinationWalletId, UUID bookingId, 
-                              String type, String status, long amount, String referenceCode, 
+    public PaymentTransaction(UUID id, UUID sourceWalletId, UUID destinationWalletId, UUID bookingId,
+                              String type, String status, long amount, String referenceCode,
                               Long balanceAfter, Timestamp createdAt) {
         this.id = id;
         this.sourceWalletId = sourceWalletId;
@@ -52,7 +52,6 @@ public class PaymentTransaction implements Serializable {
         this.createdAt = createdAt;
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

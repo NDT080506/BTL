@@ -49,7 +49,6 @@ public class AdminUserManagementView extends JDialog implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(12, 12));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Filter
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         filterPanel.setBorder(BorderFactory.createTitledBorder("Bộ lọc người dùng"));
 
@@ -74,7 +73,6 @@ public class AdminUserManagementView extends JDialog implements ActionListener {
 
         mainPanel.add(filterPanel, BorderLayout.NORTH);
 
-        // Table
         String[] cols = {"STT", "Username", "Tên hiển thị", "Email", "Vai trò", "Trạng thái", "Ngày tạo"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
@@ -85,7 +83,6 @@ public class AdminUserManagementView extends JDialog implements ActionListener {
         tblUsers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mainPanel.add(new JScrollPane(tblUsers), BorderLayout.CENTER);
 
-        // Bottom Buttons
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
 
         btnRefresh = new JButton("Làm mới");
@@ -166,14 +163,14 @@ public class AdminUserManagementView extends JDialog implements ActionListener {
                 return;
             }
 
-            int confirm = JOptionPane.showConfirmDialog(this, 
-                "Xác nhận " + actionTitle + " tài khoản [" + targetUser.getUsername() + "]?", 
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Xác nhận " + actionTitle + " tài khoản [" + targetUser.getUsername() + "]?",
                 "Xác nhận", JOptionPane.YES_NO_OPTION);
 
             if (confirm == JOptionPane.YES_OPTION) {
                 boolean ok = userDAO.updateStatus(targetUser.getId(), newStatus);
                 if (ok) {
-                    // Ghi ActionLog
+
                     actionLogDAO.insert(new ActionLog(currentAdmin.getId(), "UPDATE_USER_STATUS", "User", targetUser.getId()));
 
                     JOptionPane.showMessageDialog(this, "Đã " + actionTitle.toLowerCase() + " tài khoản thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);

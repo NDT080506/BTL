@@ -46,16 +46,15 @@ public class AdminActionLogInquiryView extends JDialog implements ActionListener
         JPanel mainPanel = new JPanel(new BorderLayout(12, 12));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Filter
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         filterPanel.setBorder(BorderFactory.createTitledBorder("Bộ lọc nhật ký thao tác"));
 
         filterPanel.add(new JLabel("Loại thao tác:"));
         cmbAction = new JComboBox<>(new String[]{
-            "ALL", 
-            "APPLY_TUTOR", 
-            "UPDATE_USER_STATUS", 
-            "REVIEW_TUTOR_APPLICATION", 
+            "ALL",
+            "APPLY_TUTOR",
+            "UPDATE_USER_STATUS",
+            "REVIEW_TUTOR_APPLICATION",
             "RESOLVE_DISPUTE"
         });
         filterPanel.add(cmbAction);
@@ -73,7 +72,6 @@ public class AdminActionLogInquiryView extends JDialog implements ActionListener
 
         mainPanel.add(filterPanel, BorderLayout.NORTH);
 
-        // Center Split
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setResizeWeight(0.65);
 
@@ -99,7 +97,6 @@ public class AdminActionLogInquiryView extends JDialog implements ActionListener
 
         mainPanel.add(splitPane, BorderLayout.CENTER);
 
-        // Bottom
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         btnRefresh = new JButton("Làm mới");
         btnRefresh.addActionListener(this);

@@ -56,17 +56,14 @@ public class AdminApplicationReviewView extends JDialog implements ActionListene
         JPanel mainPanel = new JPanel(new BorderLayout(12, 12));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Header
         JLabel lblTitle = new JLabel("DANH SÁCH HỒ SƠ ỨNG TUYỂN ĐANG CHỜ XÉT DUYỆT (PENDING)");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
         lblTitle.setForeground(new Color(24, 119, 242));
         mainPanel.add(lblTitle, BorderLayout.NORTH);
 
-        // Center SplitPane
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setResizeWeight(0.5);
 
-        // Table
         String[] cols = {"STT", "Ứng viên", "Môn đăng ký dạy", "Đường dẫn CV", "Điểm test", "Ngày nộp"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
@@ -81,7 +78,6 @@ public class AdminApplicationReviewView extends JDialog implements ActionListene
 
         splitPane.setTopComponent(new JScrollPane(tblApps));
 
-        // Detail Panel
         JPanel detailPanel = new JPanel(new BorderLayout(8, 8));
         detailPanel.setBorder(BorderFactory.createTitledBorder("Chi tiết hồ sơ & Ghi chú quản trị"));
 
@@ -100,7 +96,6 @@ public class AdminApplicationReviewView extends JDialog implements ActionListene
         splitPane.setBottomComponent(detailPanel);
         mainPanel.add(splitPane, BorderLayout.CENTER);
 
-        // Buttons
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         btnRefresh = new JButton("Làm mới");
         btnRefresh.addActionListener(this);
@@ -185,19 +180,19 @@ public class AdminApplicationReviewView extends JDialog implements ActionListene
             String note = txtAdminNote.getText().trim();
 
             if (isApprove) {
-                int confirm = JOptionPane.showConfirmDialog(this, 
-                    "Xác nhận CHẤP THUẬN hồ sơ này?\nNgười dùng sẽ được nâng cấp lên vai trò TUTOR và tạo hồ sơ chuyên môn.", 
+                int confirm = JOptionPane.showConfirmDialog(this,
+                    "Xác nhận CHẤP THUẬN hồ sơ này?\nNgười dùng sẽ được nâng cấp lên vai trò TUTOR và tạo hồ sơ chuyên môn.",
                     "Xác nhận phê duyệt", JOptionPane.YES_NO_OPTION);
 
                 if (confirm == JOptionPane.YES_OPTION) {
-                    // 1. Đổi status hồ sơ sang APPROVED
+
                     appDAO.updateStatus(app.getId(), "APPROVED", note.isEmpty() ? "Đã duyệt hồ sơ hợp lệ" : note);
-                    // 2. Cập nhật role của User thành TUTOR
+
                     userDAO.updateRole(app.getUserId(), "TUTOR");
-                    // 3. Tạo TutorProfile
+
                     TutorProfile profile = new TutorProfile(app.getUserId(), app.getBio(), app.getSubjectsCanTeach(), 5.0);
                     tutorProfileDAO.insert(profile);
-                    // 4. Ghi ActionLog
+
                     actionLogDAO.insert(new ActionLog(currentAdmin.getId(), "REVIEW_TUTOR_APPLICATION", "TutorApplication", app.getId()));
 
                     JOptionPane.showMessageDialog(this, "Phê duyệt hồ sơ thành công! Đã cấp quyền Gia sư.", "Thành công", JOptionPane.INFORMATION_MESSAGE);

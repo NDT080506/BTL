@@ -35,7 +35,6 @@ public class AdminHomeView extends JFrame implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Header
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(new Color(230, 240, 255));
         headerPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -73,7 +72,6 @@ public class AdminHomeView extends JFrame implements ActionListener {
 
         mainPanel.add(menuPanel, BorderLayout.CENTER);
 
-        // Footer
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnLogout = new JButton("Đăng xuất");
         btnLogout.setBackground(new Color(220, 53, 69));

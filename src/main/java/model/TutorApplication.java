@@ -13,7 +13,7 @@ public class TutorApplication implements Serializable {
     private String subjectsCanTeach;
     private String cvUrl;
     private String testSubmission;
-    private String status; // PENDING, APPROVED, REJECTED
+    private String status;
     private String adminNote;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -33,8 +33,8 @@ public class TutorApplication implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public TutorApplication(UUID id, UUID userId, String bio, String subjectsCanTeach, String cvUrl, 
-                            String testSubmission, String status, String adminNote, 
+    public TutorApplication(UUID id, UUID userId, String bio, String subjectsCanTeach, String cvUrl,
+                            String testSubmission, String status, String adminNote,
                             Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userId = userId;
@@ -48,7 +48,6 @@ public class TutorApplication implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

@@ -63,13 +63,11 @@ public class AdminDisputeReviewView extends JDialog implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(12, 12));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Header
         JLabel lblTitle = new JLabel("DANH SÁCH KHIẾU NẠI ĐANG CHỜ XỬ LÝ (PENDING)");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
         lblTitle.setForeground(new Color(24, 119, 242));
         mainPanel.add(lblTitle, BorderLayout.NORTH);
 
-        // Center Split
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setResizeWeight(0.5);
 
@@ -87,7 +85,6 @@ public class AdminDisputeReviewView extends JDialog implements ActionListener {
 
         splitPane.setTopComponent(new JScrollPane(tblDisputes));
 
-        // Detail Panel
         JPanel detailPanel = new JPanel(new BorderLayout(8, 8));
         detailPanel.setBorder(BorderFactory.createTitledBorder("Chi tiết khiếu nại & Hồ sơ hoàn tiền"));
 
@@ -105,7 +102,6 @@ public class AdminDisputeReviewView extends JDialog implements ActionListener {
         splitPane.setBottomComponent(detailPanel);
         mainPanel.add(splitPane, BorderLayout.CENTER);
 
-        // Bottom Buttons
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         btnRefresh = new JButton("Làm mới");
         btnRefresh.addActionListener(this);
@@ -202,22 +198,22 @@ public class AdminDisputeReviewView extends JDialog implements ActionListener {
             String note = txtAdminNote.getText().trim();
 
             if (isApprove) {
-                // Kiểm tra ví gia sư có đủ số dư hoàn tiền không
+
                 Wallet tutorWallet = walletDAO.findByUserId(bk.getTutorId());
                 Wallet studentWallet = walletDAO.findByUserId(bk.getStudentId());
 
                 if (tutorWallet == null || tutorWallet.getAvailableBalance() < d.getRefundAmount()) {
                     long currentBal = tutorWallet != null ? tutorWallet.getAvailableBalance() : 0;
-                    JOptionPane.showMessageDialog(this, 
+                    JOptionPane.showMessageDialog(this,
                         "Ví gia sư không đủ số dư để hoàn tiền!\nSố dư ví gia sư: " + String.format("%,d VNĐ", currentBal) +
-                        "\nSố tiền cần hoàn: " + String.format("%,d VNĐ", d.getRefundAmount()), 
+                        "\nSố tiền cần hoàn: " + String.format("%,d VNĐ", d.getRefundAmount()),
                         "Không đủ số dư", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                int confirm = JOptionPane.showConfirmDialog(this, 
-                    "Xác nhận CHẤP THUẬN khiếu nại?\nSố tiền " + String.format("%,d VNĐ", d.getRefundAmount()) + 
-                    " sẽ được chuyển trực tiếp từ ví gia sư về ví học viên.", 
+                int confirm = JOptionPane.showConfirmDialog(this,
+                    "Xác nhận CHẤP THUẬN khiếu nại?\nSố tiền " + String.format("%,d VNĐ", d.getRefundAmount()) +
+                    " sẽ được chuyển trực tiếp từ ví gia sư về ví học viên.",
                     "Xác nhận hoàn tiền", JOptionPane.YES_NO_OPTION);
 
                 if (confirm == JOptionPane.YES_OPTION) {

@@ -46,7 +46,6 @@ public class AdminWithdrawalInquiryView extends JDialog implements ActionListene
         JPanel mainPanel = new JPanel(new BorderLayout(12, 12));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Filter
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         filterPanel.setBorder(BorderFactory.createTitledBorder("Bộ lọc tra cứu rút tiền"));
 
@@ -67,7 +66,6 @@ public class AdminWithdrawalInquiryView extends JDialog implements ActionListene
 
         mainPanel.add(filterPanel, BorderLayout.NORTH);
 
-        // Center Split
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setResizeWeight(0.65);
 
@@ -93,7 +91,6 @@ public class AdminWithdrawalInquiryView extends JDialog implements ActionListene
 
         mainPanel.add(splitPane, BorderLayout.CENTER);
 
-        // Bottom
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         btnRefresh = new JButton("Làm mới");
         btnRefresh.addActionListener(this);
