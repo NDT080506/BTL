@@ -6,7 +6,6 @@ E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\dao\WalletDAO.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\model\TutorApplication.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\student\BookingRequestView.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\auth\LoginView.java
-E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\student\TutorApplicationView.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\student\PaymentCheckoutView.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\dao\BookingDAO.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\student\StudentHomeView.java
@@ -29,5 +28,4 @@ E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\model\TutorProfile.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\dao\BrokeragePackageDAO.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\student\TutorDetailView.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\auth\RegisterView.java
-E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\student\CreateDisputeView.java
 E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\src\main\java\view\student\WalletTopUpView.java

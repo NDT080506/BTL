@@ -19,7 +19,6 @@ public class StudentHomeView extends JFrame implements ActionListener {
     private JButton btnSearchTutors;
     private JButton btnMyBookings;
     private JButton btnTopUpWallet;
-    private JButton btnApplyTutor;
     private JButton btnRefresh;
     private JButton btnLogout;
 
@@ -69,18 +68,16 @@ public class StudentHomeView extends JFrame implements ActionListener {
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
         // Menu Actions Panel (Grid)
-        JPanel menuPanel = new JPanel(new GridLayout(2, 2, 15, 15));
+        JPanel menuPanel = new JPanel(new GridLayout(1, 3, 15, 15));
         menuPanel.setBorder(BorderFactory.createTitledBorder("Chức năng học tập & dịch vụ"));
 
         btnSearchTutors = createMenuButton("1. Tìm kiếm gia sư & Gói học", "Tra cứu hồ sơ gia sư, đánh giá và các gói kết nối");
         btnMyBookings = createMenuButton("2. Lịch học & Thanh toán học phí", "Theo dõi trạng thái lịch đặt và thanh toán trực tiếp vào ví gia sư");
         btnTopUpWallet = createMenuButton("3. Nạp tiền vào ví", "Nạp số dư khả dụng qua Cổng thanh toán mô phỏng");
-        btnApplyTutor = createMenuButton("4. Ứng tuyển làm gia sư", "Nộp hồ sơ chuyên môn để nâng cấp thành gia sư hệ thống");
 
         menuPanel.add(btnSearchTutors);
         menuPanel.add(btnMyBookings);
         menuPanel.add(btnTopUpWallet);
-        menuPanel.add(btnApplyTutor);
 
         mainPanel.add(menuPanel, BorderLayout.CENTER);
 
@@ -127,8 +124,6 @@ public class StudentHomeView extends JFrame implements ActionListener {
             new PaymentCheckoutView(this, currentUser).setVisible(true);
         } else if (e.getSource() == btnTopUpWallet) {
             new WalletTopUpView(this, currentUser).setVisible(true);
-        } else if (e.getSource() == btnApplyTutor) {
-            new TutorApplicationView(this, currentUser).setVisible(true);
         } else if (e.getSource() == btnLogout) {
             int confirm = JOptionPane.showConfirmDialog(this, 
                 "Bạn có chắc chắn muốn kết thúc phiên làm việc không?", 

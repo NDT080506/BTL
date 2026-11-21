@@ -28,7 +28,6 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
     private JTable tblBookings;
     private DefaultTableModel tableModel;
     private JButton btnPay;
-    private JButton btnDispute;
     private JButton btnRefresh;
     private JButton btnClose;
     private JLabel lblWalletInfo;
@@ -95,20 +94,12 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
         btnPay.setFocusPainted(false);
         btnPay.addActionListener(this);
 
-        btnDispute = new JButton("Khiếu nại buổi học");
-        btnDispute.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        btnDispute.setBackground(new Color(220, 53, 69));
-        btnDispute.setForeground(Color.WHITE);
-        btnDispute.setFocusPainted(false);
-        btnDispute.addActionListener(this);
-
         btnClose = new JButton("Đóng");
         btnClose.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         btnClose.addActionListener(this);
 
         bottomPanel.add(btnRefresh);
         bottomPanel.add(btnPay);
-        bottomPanel.add(btnDispute);
         bottomPanel.add(btnClose);
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -158,18 +149,6 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
             loadBookings();
         } else if (e.getSource() == btnClose) {
             this.dispose();
-        } else if (e.getSource() == btnDispute) {
-            int selectedRow = tblBookings.getSelectedRow();
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn một buổi học cần khiếu nại!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            Booking selectedBooking = bookingList.get(selectedRow);
-            if (!"PAID".equalsIgnoreCase(selectedBooking.getStatus())) {
-                JOptionPane.showMessageDialog(this, "Chỉ có thể khiếu nại đối với các lịch học đã thanh toán (PAID)!", "Chưa thể khiếu nại", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            new CreateDisputeView(this, student, selectedBooking).setVisible(true);
         } else if (e.getSource() == btnPay) {
             int selectedRow = tblBookings.getSelectedRow();
             if (selectedRow == -1) {
