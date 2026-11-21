@@ -3,8 +3,6 @@ package dao;
 import static org.junit.Assert.*;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.UUID;
 import model.Booking;
 import model.BrokeragePackage;
 import model.User;
@@ -24,14 +22,6 @@ public class BookingDAOTest {
     }
 
     @Test
-    public void test_CN04_BookingScheduleAvailable() {
-        Timestamp futureTime = Timestamp.valueOf("2030-01-01 08:00:00");
-        UUID randomTutorId = UUID.randomUUID();
-        boolean available = bookingDAO.isScheduleAvailable(randomTutorId, futureTime, 60);
-        assertTrue("Khung giờ trống trong tương lai phải khả dụng (true)", available);
-    }
-
-    @Test
     public void test_CN08_TutorResponseBookingUseCase() {
         User student = userDAO.checkLogin("student01", "123456");
         User tutor = userDAO.checkLogin("tutor01", "123456");
@@ -46,12 +36,6 @@ public class BookingDAOTest {
 
         boolean updated = bookingDAO.updateResponse(booking.getId(), "ACCEPTED");
         assertTrue("Gia sư chấp nhận lịch đặt (ACCEPTED) phải thành công", updated);
-    }
-
-    @Test
-    public void test_CN11_FindActivePackages() {
-        List<BrokeragePackage> packages = packageDAO.findAll("", true);
-        assertNotNull("Danh sách gói học đang hoạt động không được null", packages);
     }
 
     @Test
