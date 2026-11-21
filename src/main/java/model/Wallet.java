@@ -60,7 +60,6 @@ public class Wallet implements Serializable {
         return false;
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

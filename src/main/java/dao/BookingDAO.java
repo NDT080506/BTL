@@ -13,7 +13,7 @@ public class BookingDAO extends DAO {
     }
 
     public boolean isScheduleAvailable(UUID tutorId, Timestamp scheduledAt, int durationMinutes) {
-        // Một buổi học kéo dài durationMinutes phút
+
         long startMs = scheduledAt.getTime();
         long endMs = startMs + (long) durationMinutes * 60 * 1000;
         Timestamp scheduledEnd = new Timestamp(endMs);
@@ -32,7 +32,7 @@ public class BookingDAO extends DAO {
             ps.setTimestamp(5, scheduledAt);
 
             try (ResultSet rs = ps.executeQuery()) {
-                // Nếu tìm thấy lịch trùng thì không available
+
                 return !rs.next();
             }
         } catch (SQLException e) {
@@ -88,9 +88,6 @@ public class BookingDAO extends DAO {
         return list;
     }
 
-    /**
-     * Lấy các booking của học viên
-     */
     public List<Booking> findByStudent(UUID studentId) {
         List<Booking> list = new ArrayList<>();
         String sql = "SELECT * FROM tblBooking WHERE student_id = ? ORDER BY scheduled_at DESC";
@@ -150,9 +147,6 @@ public class BookingDAO extends DAO {
         }
     }
 
-    /**
-     * Cập nhật trạng thái booking chung (Ví dụ sang PAID sau thanh toán)
-     */
     public boolean updateStatus(UUID bookingId, String newStatus) {
         String sql = "UPDATE tblBooking SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {

@@ -33,7 +33,7 @@ public class BrokeragePackage implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public BrokeragePackage(UUID id, UUID tutorId, String name, String description, 
+    public BrokeragePackage(UUID id, UUID tutorId, String name, String description,
                             long price, boolean active, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.tutorId = tutorId;
@@ -45,7 +45,6 @@ public class BrokeragePackage implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

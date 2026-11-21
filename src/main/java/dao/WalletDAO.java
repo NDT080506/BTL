@@ -59,9 +59,6 @@ public class WalletDAO extends DAO {
         }
     }
 
-    /**
-     * Cộng tiền vào ví
-     */
     public boolean credit(UUID walletId, long amount) {
         String sql = "UPDATE tblWallet SET available_balance = available_balance + ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -74,9 +71,6 @@ public class WalletDAO extends DAO {
         }
     }
 
-    /**
-     * Trừ tiền từ ví (với điều kiện số dư đủ)
-     */
     public boolean debit(UUID walletId, long amount) {
         String sql = "UPDATE tblWallet SET available_balance = available_balance - ?, updated_at = CURRENT_TIMESTAMP " +
                      "WHERE id = ? AND available_balance >= ?";

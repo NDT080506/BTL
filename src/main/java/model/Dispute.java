@@ -12,7 +12,7 @@ public class Dispute implements Serializable {
     private UUID createdById;
     private String reason;
     private String evidenceUrl;
-    private String status; // PENDING, APPROVED, REJECTED
+    private String status;
     private long refundAmount;
     private String adminNote;
     private Timestamp createdAt;
@@ -34,8 +34,8 @@ public class Dispute implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public Dispute(UUID id, UUID bookingId, UUID createdById, String reason, String evidenceUrl, 
-                   String status, long refundAmount, String adminNote, 
+    public Dispute(UUID id, UUID bookingId, UUID createdById, String reason, String evidenceUrl,
+                   String status, long refundAmount, String adminNote,
                    Timestamp createdAt, Timestamp resolvedAt) {
         this.id = id;
         this.bookingId = bookingId;
@@ -49,7 +49,6 @@ public class Dispute implements Serializable {
         this.resolvedAt = resolvedAt;
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

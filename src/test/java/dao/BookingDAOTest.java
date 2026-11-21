@@ -28,7 +28,6 @@ public class BookingDAOTest {
         assertNotNull("student01 phải tồn tại", student);
         assertNotNull("tutor01 phải tồn tại", tutor);
 
-        // Tạo một booking PENDING để gia sư phản hồi
         Booking booking = new Booking(student.getId(), tutor.getId(), null,
                 new Timestamp(System.currentTimeMillis() + 86400000L), 60, "Test response", 250000L);
         boolean inserted = bookingDAO.insert(booking);

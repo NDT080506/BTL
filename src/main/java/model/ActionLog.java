@@ -31,7 +31,7 @@ public class ActionLog implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public ActionLog(UUID id, UUID userId, String action, String targetType, UUID targetId, 
+    public ActionLog(UUID id, UUID userId, String action, String targetType, UUID targetId,
                      String ipAddress, String userAgent, Timestamp createdAt) {
         this.id = id;
         this.userId = userId;
@@ -43,7 +43,6 @@ public class ActionLog implements Serializable {
         this.createdAt = createdAt;
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

@@ -15,7 +15,7 @@ public class Booking implements Serializable {
     private Timestamp scheduledAt;
     private int durationMinutes;
     private String note;
-    private String status; // PENDING_TUTOR_CONFIRMATION, ACCEPTED, REJECTED, PAID, CANCELLED
+    private String status;
     private long totalPrice;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -28,7 +28,7 @@ public class Booking implements Serializable {
     public Booking() {
     }
 
-    public Booking(UUID studentId, UUID tutorId, UUID packageId, Timestamp scheduledAt, 
+    public Booking(UUID studentId, UUID tutorId, UUID packageId, Timestamp scheduledAt,
                    int durationMinutes, String note, long totalPrice) {
         this.id = UUID.randomUUID();
         this.studentId = studentId;
@@ -42,8 +42,8 @@ public class Booking implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public Booking(UUID id, UUID studentId, UUID tutorId, UUID packageId, Timestamp scheduledAt, 
-                   int durationMinutes, String note, String status, long totalPrice, 
+    public Booking(UUID id, UUID studentId, UUID tutorId, UUID packageId, Timestamp scheduledAt,
+                   int durationMinutes, String note, String status, long totalPrice,
                    Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.studentId = studentId;
@@ -63,7 +63,6 @@ public class Booking implements Serializable {
         this.updatedAt = new Timestamp(System.currentTimeMillis());
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

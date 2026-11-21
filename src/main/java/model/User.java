@@ -13,8 +13,8 @@ public class User implements Serializable {
     private String password;
     private String email;
     private String displayName;
-    private String role; // STUDENT, TUTOR, ADMIN
-    private String status; // ACTIVE, LOCKED
+    private String role;
+    private String status;
     private String phone;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -59,7 +59,6 @@ public class User implements Serializable {
         return this.password.equals(password);
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }
