@@ -6,7 +6,7 @@ import view.auth.LoginView;
 
 public class Main {
     public static void main(String[] args) {
-        // Thiết lập giao diện hiện đại nếu có FlatLaf, nếu không thì dùng System Look & Feel
+
         try {
             UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
         } catch (Exception e) {
@@ -16,7 +16,6 @@ public class Main {
             }
         }
 
-        // Khởi động kết nối CSDL và mở màn hình Đăng nhập
         SwingUtilities.invokeLater(() -> {
             DAO.openConnection();
             LoginView loginView = new LoginView();

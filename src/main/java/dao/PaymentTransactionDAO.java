@@ -51,7 +51,7 @@ public class PaymentTransactionDAO extends DAO {
     public boolean confirmDeposit(String referenceCode, String gatewayResult) {
         String checkSql = "SELECT * FROM tblPaymentTransaction WHERE reference_code = ? AND status = 'PENDING'";
         try {
-            con.setAutoCommit(false); // Bắt đầu transaction
+            con.setAutoCommit(false);
 
             UUID destWalletId = null;
             long amount = 0;
@@ -64,13 +64,13 @@ public class PaymentTransactionDAO extends DAO {
                         amount = rs.getLong("amount");
                     } else {
                         con.rollback();
-                        return false; // Mã giao dịch không hợp lệ hoặc đã được xử lý trước đó
+                        return false;
                     }
                 }
             }
 
             if ("SUCCESS".equalsIgnoreCase(gatewayResult)) {
-                // 1. Cộng tiền vào ví
+
                 String updateWalletSql = "UPDATE tblWallet SET available_balance = available_balance + ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
                 try (PreparedStatement ps = con.prepareStatement(updateWalletSql)) {
                     ps.setLong(1, amount);
@@ -78,14 +78,13 @@ public class PaymentTransactionDAO extends DAO {
                     ps.executeUpdate();
                 }
 
-                // 2. Cập nhật transaction SUCCESS
                 String updateTxSql = "UPDATE tblPaymentTransaction SET status = 'SUCCESS' WHERE reference_code = ?";
                 try (PreparedStatement ps = con.prepareStatement(updateTxSql)) {
                     ps.setString(1, referenceCode);
                     ps.executeUpdate();
                 }
             } else {
-                // Đánh dấu giao dịch FAILED
+
                 String updateTxSql = "UPDATE tblPaymentTransaction SET status = 'FAILED' WHERE reference_code = ?";
                 try (PreparedStatement ps = con.prepareStatement(updateTxSql)) {
                     ps.setString(1, referenceCode);
@@ -115,28 +114,25 @@ public class PaymentTransactionDAO extends DAO {
         UUID txId = UUID.randomUUID();
 
         try {
-            con.setAutoCommit(false); // Transaction
+            con.setAutoCommit(false);
 
-            // 1. Trừ tiền ví học viên
             try (PreparedStatement psDebit = con.prepareStatement(debitSql)) {
                 psDebit.setLong(1, amount);
                 psDebit.setObject(2, studentWallet.getId());
                 psDebit.setLong(3, amount);
                 int rows = psDebit.executeUpdate();
                 if (rows == 0) {
-                    con.rollback(); // Không đủ tiền
+                    con.rollback();
                     return null;
                 }
             }
 
-            // 2. Cộng tiền ví gia sư
             try (PreparedStatement psCredit = con.prepareStatement(creditSql)) {
                 psCredit.setLong(1, amount);
                 psCredit.setObject(2, tutorWallet.getId());
                 psCredit.executeUpdate();
             }
 
-            // 3. Tạo bản ghi giao dịch
             long studentBalanceAfter = studentWallet.getAvailableBalance() - amount;
             try (PreparedStatement psTx = con.prepareStatement(txSql)) {
                 psTx.setObject(1, txId);
@@ -149,14 +145,13 @@ public class PaymentTransactionDAO extends DAO {
                 psTx.executeUpdate();
             }
 
-            // 4. Đổi trạng thái Booking sang PAID
             try (PreparedStatement psBk = con.prepareStatement(updateBookingSql)) {
                 psBk.setObject(1, booking.getId());
                 psBk.executeUpdate();
             }
 
-            con.commit(); // Hoàn tất thành công
-            return new PaymentTransaction(txId, studentWallet.getId(), tutorWallet.getId(), booking.getId(), 
+            con.commit();
+            return new PaymentTransaction(txId, studentWallet.getId(), tutorWallet.getId(), booking.getId(),
                                           "TRANSFER", "SUCCESS", amount, refCode, studentBalanceAfter, new Timestamp(System.currentTimeMillis()));
         } catch (SQLException e) {
             try { con.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
@@ -180,25 +175,22 @@ public class PaymentTransactionDAO extends DAO {
         try {
             con.setAutoCommit(false);
 
-            // 1. Trừ tiền ví gia sư
             try (PreparedStatement ps = con.prepareStatement(debitSql)) {
                 ps.setLong(1, refundAmount);
                 ps.setObject(2, tutorWallet.getId());
                 ps.setLong(3, refundAmount);
                 if (ps.executeUpdate() == 0) {
-                    con.rollback(); // Gia sư không đủ tiền hoàn
+                    con.rollback();
                     return false;
                 }
             }
 
-            // 2. Cộng tiền ví học viên
             try (PreparedStatement ps = con.prepareStatement(creditSql)) {
                 ps.setLong(1, refundAmount);
                 ps.setObject(2, studentWallet.getId());
                 ps.executeUpdate();
             }
 
-            // 3. Ghi transaction REFUND
             try (PreparedStatement ps = con.prepareStatement(txSql)) {
                 ps.setObject(1, txId);
                 ps.setObject(2, tutorWallet.getId());
@@ -209,7 +201,6 @@ public class PaymentTransactionDAO extends DAO {
                 ps.executeUpdate();
             }
 
-            // 4. Cập nhật Dispute sang APPROVED
             try (PreparedStatement ps = con.prepareStatement(updateDisputeSql)) {
                 ps.setObject(1, disputeId);
                 ps.executeUpdate();

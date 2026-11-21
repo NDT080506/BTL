@@ -38,7 +38,6 @@ public class StudentHomeView extends JFrame implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(new Color(240, 245, 255));
         headerPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -67,7 +66,6 @@ public class StudentHomeView extends JFrame implements ActionListener {
         headerPanel.add(btnRefresh, BorderLayout.EAST);
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // Menu Actions Panel (Grid)
         JPanel menuPanel = new JPanel(new GridLayout(1, 3, 15, 15));
         menuPanel.setBorder(BorderFactory.createTitledBorder("Chức năng học tập & dịch vụ"));
 
@@ -81,7 +79,6 @@ public class StudentHomeView extends JFrame implements ActionListener {
 
         mainPanel.add(menuPanel, BorderLayout.CENTER);
 
-        // Footer / Logout
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnLogout = new JButton("Đăng xuất");
         btnLogout.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -125,11 +122,11 @@ public class StudentHomeView extends JFrame implements ActionListener {
         } else if (e.getSource() == btnTopUpWallet) {
             new WalletTopUpView(this, currentUser).setVisible(true);
         } else if (e.getSource() == btnLogout) {
-            int confirm = JOptionPane.showConfirmDialog(this, 
-                "Bạn có chắc chắn muốn kết thúc phiên làm việc không?", 
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc chắn muốn kết thúc phiên làm việc không?",
                 "Xác nhận kết thúc phiên", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                // Xóa người dùng hiện tại khỏi bộ nhớ
+
                 currentUser = null;
                 this.dispose();
                 new LoginView().setVisible(true);

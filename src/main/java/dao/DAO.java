@@ -6,11 +6,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/**
- * Lớp DAO cơ sở (Base DAO)
- * Cung cấp kết nối cơ sở dữ liệu dùng chung (PostgreSQL) theo chuẩn thiết kế PTIT / Blog Software Design.
- * Các DAO nghiệp vụ kế thừa lớp này để dùng chung thuộc tính Connection con.
- */
 public class DAO {
     public static Connection con;
 
@@ -69,9 +64,6 @@ public class DAO {
         }
     }
 
-    /**
-     * Cho phép cấu hình lại thông số kết nối khi cần thiết
-     */
     public static void setDbConfig(String url, String user, String password) {
         closeConnection();
         dbUrl = url;

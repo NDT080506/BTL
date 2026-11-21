@@ -56,7 +56,6 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout(12, 12));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         JLabel lblTitle = new JLabel("LỊCH ĐẶT CỦA BẠN & THANH TOÁN HỌC PHÍ");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -70,7 +69,6 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
         headerPanel.add(lblWalletInfo, BorderLayout.EAST);
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // Table
         String[] cols = {"Mã lịch", "Gia sư", "Thời gian học", "Thời lượng", "Học phí", "Trạng thái", "Ghi chú"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
@@ -81,7 +79,6 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
         tblBookings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mainPanel.add(new JScrollPane(tblBookings), BorderLayout.CENTER);
 
-        // Bottom Panel
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         btnRefresh = new JButton("Làm mới");
         btnRefresh.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -107,7 +104,7 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
     }
 
     private void loadBookings() {
-        // Cập nhật số dư ví học viên
+
         Wallet wallet = walletDAO.findByUserId(student.getId());
         long balance = wallet != null ? wallet.getAvailableBalance() : 0;
         lblWalletInfo.setText("Số dư ví học viên: " + String.format("%,d VNĐ", balance));
@@ -158,7 +155,6 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
 
             Booking selectedBooking = bookingList.get(selectedRow);
 
-            // Kiểm tra trạng thái booking
             if (!"ACCEPTED".equalsIgnoreCase(selectedBooking.getStatus())) {
                 if ("PAID".equalsIgnoreCase(selectedBooking.getStatus())) {
                     JOptionPane.showMessageDialog(this, "Lịch học này đã được thanh toán trước đó!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -168,43 +164,40 @@ public class PaymentCheckoutView extends JDialog implements ActionListener {
                 return;
             }
 
-            // Kiểm tra ví học viên
             Wallet studentWallet = walletDAO.findByUserId(student.getId());
             if (studentWallet == null || studentWallet.getAvailableBalance() < selectedBooking.getTotalPrice()) {
                 long currentBal = studentWallet != null ? studentWallet.getAvailableBalance() : 0;
                 long need = selectedBooking.getTotalPrice() - currentBal;
-                JOptionPane.showMessageDialog(this, 
-                    "Số dư ví không đủ để thanh toán!\nSố dư hiện có: " + String.format("%,d VNĐ", currentBal) + 
-                    "\nCần thêm: " + String.format("%,d VNĐ", need) + 
-                    "\nVui lòng nạp thêm tiền vào ví.", 
+                JOptionPane.showMessageDialog(this,
+                    "Số dư ví không đủ để thanh toán!\nSố dư hiện có: " + String.format("%,d VNĐ", currentBal) +
+                    "\nCần thêm: " + String.format("%,d VNĐ", need) +
+                    "\nVui lòng nạp thêm tiền vào ví.",
                     "Số dư không đủ", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Lấy ví gia sư
             Wallet tutorWallet = walletDAO.findByUserId(selectedBooking.getTutorId());
             if (tutorWallet == null) {
                 tutorWallet = new Wallet(selectedBooking.getTutorId(), 0);
                 walletDAO.insert(tutorWallet);
             }
 
-            // Xác nhận thanh toán
-            int confirm = JOptionPane.showConfirmDialog(this, 
-                "Xác nhận thanh toán trực tiếp " + String.format("%,d VNĐ", selectedBooking.getTotalPrice()) + 
-                " từ ví của bạn sang ví gia sư?", 
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Xác nhận thanh toán trực tiếp " + String.format("%,d VNĐ", selectedBooking.getTotalPrice()) +
+                " từ ví của bạn sang ví gia sư?",
                 "Xác nhận thanh toán", JOptionPane.YES_NO_OPTION);
 
             if (confirm == JOptionPane.YES_OPTION) {
                 PaymentTransaction tx = txDAO.transferBetweenWallets(selectedBooking, studentWallet, tutorWallet, selectedBooking.getTotalPrice());
                 if (tx != null) {
-                    JOptionPane.showMessageDialog(this, 
+                    JOptionPane.showMessageDialog(this,
                         "Thanh toán thành công!\n" +
                         "Mã giao dịch: " + tx.getReferenceCode() + "\n" +
                         "Số tiền: " + String.format("%,d VNĐ", tx.getAmount()) + "\n" +
-                        "Học phí đã được chuyển trực tiếp vào ví gia sư.", 
+                        "Học phí đã được chuyển trực tiếp vào ví gia sư.",
                         "Giao dịch thành công", JOptionPane.INFORMATION_MESSAGE);
                     loadBookings();
-                    parent.loadWalletData(); // Cập nhật lại số dư trên màn hình chính
+                    parent.loadWalletData();
                 } else {
                     JOptionPane.showMessageDialog(this, "Giao dịch thất bại! Lỗi chuyển khoản ví.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }

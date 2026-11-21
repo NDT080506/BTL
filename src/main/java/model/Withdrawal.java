@@ -14,7 +14,7 @@ public class Withdrawal implements Serializable {
     private String bankName;
     private String accountNumber;
     private String accountHolder;
-    private String status; // PENDING, PROCESSING, COMPLETED, REJECTED
+    private String status;
     private Timestamp createdAt;
     private Timestamp processedAt;
     private User user;
@@ -23,7 +23,7 @@ public class Withdrawal implements Serializable {
     public Withdrawal() {
     }
 
-    public Withdrawal(UUID userId, UUID walletId, long amount, String bankName, 
+    public Withdrawal(UUID userId, UUID walletId, long amount, String bankName,
                       String accountNumber, String accountHolder) {
         this.id = UUID.randomUUID();
         this.userId = userId;
@@ -36,8 +36,8 @@ public class Withdrawal implements Serializable {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public Withdrawal(UUID id, UUID userId, UUID walletId, long amount, String bankName, 
-                      String accountNumber, String accountHolder, String status, 
+    public Withdrawal(UUID id, UUID userId, UUID walletId, long amount, String bankName,
+                      String accountNumber, String accountHolder, String status,
                       Timestamp createdAt, Timestamp processedAt) {
         this.id = id;
         this.userId = userId;
@@ -51,9 +51,6 @@ public class Withdrawal implements Serializable {
         this.processedAt = processedAt;
     }
 
-    /**
-     * Che bớt số tài khoản theo quy định bảo mật trong báo cáo (VD: ••••1234)
-     */
     public String getMaskedAccountNumber() {
         if (accountNumber == null || accountNumber.length() < 4) {
             return "****";
@@ -61,7 +58,6 @@ public class Withdrawal implements Serializable {
         return "••••" + accountNumber.substring(accountNumber.length() - 4);
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }
