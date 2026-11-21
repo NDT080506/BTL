@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import model.User;
-import view.admin.AdminHomeView;
 import view.student.StudentHomeView;
-import view.tutor.TutorHomeView;
 
 public class LoginView extends JFrame implements ActionListener {
     private JTextField txtUsername;
@@ -120,16 +118,14 @@ public class LoginView extends JFrame implements ActionListener {
             User user = userDAO.checkLogin(username, password);
             if (user != null) {
                 lblMessage.setText("");
-                this.dispose(); // Đóng LoginView
-
-                // Điều hướng giao diện theo vai trò (Role-based Navigation)
                 String role = user.getRole();
-                if ("ADMIN".equalsIgnoreCase(role)) {
-                    new AdminHomeView(user).setVisible(true);
-                } else if ("TUTOR".equalsIgnoreCase(role)) {
-                    new TutorHomeView(user).setVisible(true);
-                } else {
+                if ("STUDENT".equalsIgnoreCase(role)) {
+                    this.dispose();
                     new StudentHomeView(user).setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                        "Tài khoản thuộc vai trò " + role + ".\nPhân hệ này đang được phát triển trên nhánh riêng biệt!",
+                        "Thông báo phân hệ", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
                 lblMessage.setText("Sai tài khoản, mật khẩu hoặc tài khoản đã bị khóa!");

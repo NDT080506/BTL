@@ -3,8 +3,6 @@ package dao;
 import static org.junit.Assert.*;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.UUID;
 import model.Booking;
 import model.Dispute;
 import model.TutorApplication;
@@ -40,18 +38,6 @@ public class ApplicationAndDisputeDAOTest {
         TutorApplication app = new TutorApplication(student.getId(), "Giới thiệu gia sư Toán", "Toán 12", "http://cv.pdf", "http://test.pdf");
         boolean inserted = applicationDAO.insert(app);
         assertTrue("Nộp hồ sơ ứng tuyển gia sư phải thành công", inserted);
-    }
-
-    @Test
-    public void test_CN10_ReviewTutorApplication() {
-        List<TutorApplication> pendingList = applicationDAO.findPending();
-        assertNotNull("Danh sách hồ sơ chờ duyệt không được null", pendingList);
-    }
-
-    @Test
-    public void test_CN12_DisputeRefund() {
-        List<Dispute> pendingDisputes = disputeDAO.findPending();
-        assertNotNull("Danh sách khiếu nại chờ xử lý không được null", pendingDisputes);
     }
 
     @Test
