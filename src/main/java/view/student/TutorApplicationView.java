@@ -10,9 +10,6 @@ import model.ActionLog;
 import model.TutorApplication;
 import model.User;
 
-/**
- * TutorApplicationView: Màn hình Nộp và theo dõi hồ sơ ứng tuyển gia sư (CN02.13)
- */
 public class TutorApplicationView extends JDialog implements ActionListener {
     private StudentHomeView parent;
     private User student;

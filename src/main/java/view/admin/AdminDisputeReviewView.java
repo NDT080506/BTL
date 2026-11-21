@@ -18,9 +18,6 @@ import model.Dispute;
 import model.User;
 import model.Wallet;
 
-/**
- * AdminDisputeReviewView: Quản trị xử lý khiếu nại và hoàn tiền (CN06.05)
- */
 public class AdminDisputeReviewView extends JDialog implements ActionListener {
     private AdminHomeView parent;
     private User currentAdmin;

@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * Entity: TutorApplication (Hồ sơ ứng tuyển gia sư)
- * Bảng tương ứng: tblTutorApplication
- */
 public class TutorApplication implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,8 +17,6 @@ public class TutorApplication implements Serializable {
     private String adminNote;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
-    // References
     private User user;
 
     public TutorApplication() {

@@ -11,9 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import model.User;
 import model.Withdrawal;
 
-/**
- * AdminWithdrawalInquiryView: Quản trị tra cứu yêu cầu rút tiền (CN06.06)
- */
 public class AdminWithdrawalInquiryView extends JDialog implements ActionListener {
     private AdminHomeView parent;
 

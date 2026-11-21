@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.UUID;
 import model.Dispute;
 
-/**
- * DisputeDAO: Thao tác khiếu nại và hoàn tiền
- * Phục vụ: CN06.05
- */
 public class DisputeDAO extends DAO {
 
     public DisputeDAO() {

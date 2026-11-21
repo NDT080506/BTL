@@ -12,15 +12,12 @@ import model.User;
 import model.Wallet;
 import model.Withdrawal;
 
-/**
- * CreateWithdrawalView: Màn hình Yêu cầu rút tiền về tài khoản ngân hàng
- * Cung cấp dữ liệu đầu vào cho CN06.06 (Quản trị tra cứu yêu cầu rút tiền)
- */
 public class CreateWithdrawalView extends JDialog implements ActionListener {
     private TutorHomeView parent;
     private User tutor;
     private Wallet wallet;
 
+    private JLabel lblBal;
     private JTextField txtAmount;
     private JComboBox<String> cmbBank;
     private JTextField txtAccountNumber;
@@ -66,7 +63,7 @@ public class CreateWithdrawalView extends JDialog implements ActionListener {
         // Số dư hiện tại
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.35;
         formPanel.add(new JLabel("Số dư ví hiện tại:"), gbc);
-        JLabel lblBal = new JLabel(String.format("%,d VNĐ", wallet.getAvailableBalance()));
+        lblBal = new JLabel(String.format("%,d VNĐ", wallet.getAvailableBalance()));
         lblBal.setFont(new Font("Segoe UI", Font.BOLD, 13));
         lblBal.setForeground(new Color(40, 167, 69));
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.65;

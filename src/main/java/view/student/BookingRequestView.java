@@ -12,9 +12,6 @@ import model.Booking;
 import model.BrokeragePackage;
 import model.User;
 
-/**
- * BookingRequestView: Màn hình Đặt lịch thuê gia sư (CN02.07)
- */
 public class BookingRequestView extends JDialog implements ActionListener {
     private TutorDetailView parent;
     private User student;

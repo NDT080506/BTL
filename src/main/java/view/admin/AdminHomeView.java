@@ -7,12 +7,11 @@ import javax.swing.*;
 import model.User;
 import view.auth.LoginView;
 
-/**
- * AdminHomeView: Cổng quản trị hệ thống TutorTech (Admin Portal)
- */
 public class AdminHomeView extends JFrame implements ActionListener {
     private User currentAdmin;
 
+    private JLabel lblTitle;
+    private JLabel lblAdminInfo;
     private JButton btnUsers;
     private JButton btnApplications;
     private JButton btnPackages;
@@ -44,18 +43,17 @@ public class AdminHomeView extends JFrame implements ActionListener {
             BorderFactory.createEmptyBorder(12, 15, 12, 15)
         ));
 
-        JLabel lblTitle = new JLabel("BẢNG ĐIỀU KHIỂN QUẢN TRỊ VIÊN");
+        lblTitle = new JLabel("BẢNG ĐIỀU KHIỂN QUẢN TRỊ VIÊN");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 17));
         lblTitle.setForeground(new Color(24, 119, 242));
 
-        JLabel lblAdminInfo = new JLabel("Admin: " + currentAdmin.getDisplayName() + " (" + currentAdmin.getUsername() + ")");
+        lblAdminInfo = new JLabel("Admin: " + currentAdmin.getDisplayName() + " (" + currentAdmin.getUsername() + ")");
         lblAdminInfo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
         headerPanel.add(lblTitle, BorderLayout.WEST);
         headerPanel.add(lblAdminInfo, BorderLayout.EAST);
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // Grid Menu (6 Chức năng quản trị)
         JPanel menuPanel = new JPanel(new GridLayout(3, 2, 15, 15));
         menuPanel.setBorder(BorderFactory.createTitledBorder("Các phân hệ quản trị nghiệp vụ"));
 

@@ -4,9 +4,6 @@ import javax.swing.UIManager;
 import dao.DAO;
 import view.auth.LoginView;
 
-/**
- * Entry Point của ứng dụng TutorTech
- */
 public class Main {
     public static void main(String[] args) {
         // Thiết lập giao diện hiện đại nếu có FlatLaf, nếu không thì dùng System Look & Feel

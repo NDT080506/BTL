@@ -10,10 +10,6 @@ import model.Withdrawal;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Unit Test cho nhóm Ví tiền, Thanh toán và Rút tiền
- * Bao phủ các luồng: CN05, CN07, CN13, CN16
- */
 public class WalletDAOTest {
     private WalletDAO walletDAO;
     private WithdrawalDAO withdrawalDAO;
@@ -26,7 +22,6 @@ public class WalletDAOTest {
         userDAO = new UserDAO();
     }
 
-    // CN05 - Thanh toán tiền thuê gia sư trực tiếp vào ví: Logic trừ tiền (debit)
     @Test
     public void test_CN05_PaymentCheckoutDebit() {
         Wallet w = new Wallet(UUID.randomUUID(), 500000);
@@ -39,7 +34,6 @@ public class WalletDAOTest {
         assertEquals(200000, w.getAvailableBalance());
     }
 
-    // CN07 - Nạp tiền vào ví bằng cổng mô phỏng: Logic cộng tiền (credit)
     @Test
     public void test_CN07_WalletCredit_TopUp() {
         Wallet w = new Wallet(UUID.randomUUID(), 100000);
@@ -47,14 +41,12 @@ public class WalletDAOTest {
         assertEquals(600000, w.getAvailableBalance());
     }
 
-    // CN13 - Quản trị tra cứu yêu cầu rút tiền: Tra cứu danh sách yêu cầu rút tiền
     @Test
     public void test_CN13_WithdrawalInquiry() {
         List<Withdrawal> list = withdrawalDAO.findAll("", "");
         assertNotNull("Danh sách yêu cầu rút tiền tra cứu không được null", list);
     }
 
-    // CN16 - Gia sư tạo yêu cầu rút tiền về ngân hàng: Tạo yêu cầu rút
     @Test
     public void test_CN16_CreateWithdrawal() {
         User tutor = userDAO.checkLogin("tutor01", "123456");

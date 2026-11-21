@@ -2,12 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
-/**
- * Entity: Wallet (Ví tiền người dùng)
- * Bảng tương ứng: tblWallet
- */
 public class Wallet implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -16,9 +13,9 @@ public class Wallet implements Serializable {
     private long availableBalance;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
-    // References
     private User user;
+    private List<Withdrawal> withdrawals;
+    private List<PaymentTransaction> paymentTransactions;
 
     public Wallet() {
         this.availableBalance = 0;
@@ -110,6 +107,22 @@ public class Wallet implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Withdrawal> getWithdrawals() {
+        return withdrawals;
+    }
+
+    public void setWithdrawals(List<Withdrawal> withdrawals) {
+        this.withdrawals = withdrawals;
+    }
+
+    public List<PaymentTransaction> getPaymentTransactions() {
+        return paymentTransactions;
+    }
+
+    public void setPaymentTransactions(List<PaymentTransaction> paymentTransactions) {
+        this.paymentTransactions = paymentTransactions;
     }
 
     @Override

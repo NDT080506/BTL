@@ -12,10 +12,6 @@ import model.User;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Unit Test cho nhóm Ứng tuyển gia sư và Xử lý khiếu nại
- * Bao phủ các luồng: CN06, CN10, CN12, CN17
- */
 public class ApplicationAndDisputeDAOTest {
     private TutorApplicationDAO applicationDAO;
     private DisputeDAO disputeDAO;
@@ -30,7 +26,6 @@ public class ApplicationAndDisputeDAOTest {
         userDAO = new UserDAO();
     }
 
-    // CN06 - Nộp và theo dõi hồ sơ ứng tuyển gia sư: Học viên nộp hồ sơ ứng tuyển
     @Test
     public void test_CN06_SubmitTutorApplication() {
         User student = userDAO.checkLogin("student01", "123456");
@@ -47,21 +42,18 @@ public class ApplicationAndDisputeDAOTest {
         assertTrue("Nộp hồ sơ ứng tuyển gia sư phải thành công", inserted);
     }
 
-    // CN10 - Quản trị xét duyệt hồ sơ ứng tuyển gia sư: Tra cứu danh sách hồ sơ chờ duyệt
     @Test
     public void test_CN10_ReviewTutorApplication() {
         List<TutorApplication> pendingList = applicationDAO.findPending();
         assertNotNull("Danh sách hồ sơ chờ duyệt không được null", pendingList);
     }
 
-    // CN12 - Quản trị xử lý khiếu nại và hoàn tiền: Tra cứu khiếu nại chờ xử lý
     @Test
     public void test_CN12_DisputeRefund() {
         List<Dispute> pendingDisputes = disputeDAO.findPending();
         assertNotNull("Danh sách khiếu nại chờ xử lý không được null", pendingDisputes);
     }
 
-    // CN17 - Học viên gửi khiếu nại buổi học đã thanh toán: Gửi khiếu nại
     @Test
     public void test_CN17_CreateDispute() {
         User student = userDAO.checkLogin("student01", "123456");

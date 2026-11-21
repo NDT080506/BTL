@@ -16,9 +16,6 @@ import model.PaymentTransaction;
 import model.User;
 import model.Wallet;
 
-/**
- * PaymentCheckoutView: Màn hình Quản lý lịch học & Thanh toán học phí (CN02.08)
- */
 public class PaymentCheckoutView extends JDialog implements ActionListener {
     private StudentHomeView parent;
     private User student;

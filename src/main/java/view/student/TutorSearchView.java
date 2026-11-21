@@ -11,9 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import model.TutorProfile;
 import model.User;
 
-/**
- * TutorSearchView: Màn hình Tra cứu gia sư & gói dịch vụ (CN02.03)
- */
 public class TutorSearchView extends JDialog implements ActionListener {
     private StudentHomeView parent;
     private User currentStudent;

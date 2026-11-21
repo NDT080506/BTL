@@ -27,7 +27,6 @@
             <version>42.7.2</version>
         </dependency>
 
-        <!-- JUnit 4 cho kiểm thử các lớp Control/DAO theo giáo trình PTIT -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -35,7 +34,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- FlatLaf: Look & Feel hiện đại cho Java Swing -->
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
@@ -55,7 +53,6 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!-- Cấu hình exec-maven-plugin để chạy trực tiếp không cần gõ -Dexec.mainClass -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

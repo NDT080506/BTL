@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * Entity: ActionLog (Nhật ký quản trị & hoạt động)
- * Bảng tương ứng: tblActionLog
- */
 public class ActionLog implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -19,8 +15,6 @@ public class ActionLog implements Serializable {
     private String ipAddress;
     private String userAgent;
     private Timestamp createdAt;
-
-    // References
     private User user;
 
     public ActionLog() {

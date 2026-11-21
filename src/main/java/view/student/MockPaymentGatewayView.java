@@ -6,10 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-/**
- * MockPaymentGatewayView: Cổng thanh toán mô phỏng (CN02.14)
- * Giả lập giao diện thanh toán bên ngoài (Ngân hàng / Cổng VNPAY / VietQR)
- */
 public class MockPaymentGatewayView extends JDialog implements ActionListener {
     private WalletTopUpView parent;
     private String referenceCode;

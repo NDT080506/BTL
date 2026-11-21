@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * Entity: PaymentTransaction (Bản ghi biến động số dư và giao dịch)
- * Bảng tương ứng: tblPaymentTransaction
- */
 public class PaymentTransaction implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,8 +17,6 @@ public class PaymentTransaction implements Serializable {
     private String referenceCode;
     private Long balanceAfter;
     private Timestamp createdAt;
-
-    // References
     private Booking booking;
     private Wallet sourceWallet;
     private Wallet destinationWallet;

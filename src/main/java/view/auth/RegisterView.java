@@ -9,9 +9,6 @@ import javax.swing.*;
 import model.User;
 import model.Wallet;
 
-/**
- * RegisterView: Màn hình Đăng ký tài khoản (CN01.03)
- */
 public class RegisterView extends JFrame implements ActionListener {
     private JTextField txtUsername;
     private JPasswordField txtPassword;

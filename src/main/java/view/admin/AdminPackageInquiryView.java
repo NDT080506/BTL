@@ -11,9 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import model.BrokeragePackage;
 import model.User;
 
-/**
- * AdminPackageInquiryView: Quản trị tra cứu danh sách gói gia sư (CN06.03)
- */
 public class AdminPackageInquiryView extends JDialog implements ActionListener {
     private AdminHomeView parent;
 

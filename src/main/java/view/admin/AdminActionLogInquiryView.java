@@ -11,9 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import model.ActionLog;
 import model.User;
 
-/**
- * AdminActionLogInquiryView: Quản trị tra cứu nhật ký thao tác (CN06.07)
- */
 public class AdminActionLogInquiryView extends JDialog implements ActionListener {
     private AdminHomeView parent;
 

@@ -10,9 +10,6 @@ import model.PaymentTransaction;
 import model.User;
 import model.Wallet;
 
-/**
- * WalletTopUpView: Màn hình Nạp tiền vào ví bằng cổng thanh toán mô phỏng (CN02.14)
- */
 public class WalletTopUpView extends JDialog implements ActionListener {
     private StudentHomeView parent;
     private User student;

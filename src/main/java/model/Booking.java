@@ -2,12 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
-/**
- * Entity: Booking (Đơn đặt lịch thuê gia sư)
- * Bảng tương ứng: tblBooking
- */
 public class Booking implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -22,11 +19,11 @@ public class Booking implements Serializable {
     private long totalPrice;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
-    // References
     private User student;
     private User tutor;
     private BrokeragePackage brokeragePackage;
+    private List<Dispute> disputes;
+    private List<PaymentTransaction> paymentTransactions;
 
     public Booking() {
     }
@@ -177,6 +174,22 @@ public class Booking implements Serializable {
 
     public void setBrokeragePackage(BrokeragePackage brokeragePackage) {
         this.brokeragePackage = brokeragePackage;
+    }
+
+    public List<Dispute> getDisputes() {
+        return disputes;
+    }
+
+    public void setDisputes(List<Dispute> disputes) {
+        this.disputes = disputes;
+    }
+
+    public List<PaymentTransaction> getPaymentTransactions() {
+        return paymentTransactions;
+    }
+
+    public void setPaymentTransactions(List<PaymentTransaction> paymentTransactions) {
+        this.paymentTransactions = paymentTransactions;
     }
 
     @Override

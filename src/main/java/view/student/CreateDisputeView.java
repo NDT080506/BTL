@@ -11,15 +11,12 @@ import model.Booking;
 import model.Dispute;
 import model.User;
 
-/**
- * CreateDisputeView: Màn hình gửi khiếu nại buổi học dành cho Học viên
- * Cung cấp đầu vào cho CN06.05 (Quản trị xử lý khiếu nại và hoàn tiền)
- */
 public class CreateDisputeView extends JDialog implements ActionListener {
     private PaymentCheckoutView parent;
     private User student;
     private Booking booking;
 
+    private JLabel lblBookingCode;
     private JTextArea txtReason;
     private JTextField txtEvidenceUrl;
     private JTextField txtRefundAmount;
@@ -61,7 +58,7 @@ public class CreateDisputeView extends JDialog implements ActionListener {
         // Mã booking
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.35;
         formPanel.add(new JLabel("Mã lịch học:"), gbc);
-        JLabel lblBookingCode = new JLabel(booking.getId().toString().substring(0, 8) + "...");
+        lblBookingCode = new JLabel(booking.getId().toString().substring(0, 8) + "...");
         lblBookingCode.setFont(new Font("Segoe UI", Font.BOLD, 12));
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.65;
         formPanel.add(lblBookingCode, gbc);

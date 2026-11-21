@@ -15,9 +15,6 @@ import model.TutorApplication;
 import model.TutorProfile;
 import model.User;
 
-/**
- * AdminApplicationReviewView: Xét duyệt hồ sơ ứng tuyển gia sư (CN06.02)
- */
 public class AdminApplicationReviewView extends JDialog implements ActionListener {
     private AdminHomeView parent;
     private User currentAdmin;

@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.UUID;
 import model.Withdrawal;
 
-/**
- * WithdrawalDAO: Thao tác tra cứu yêu cầu rút tiền
- * Phục vụ: CN06.06
- */
 public class WithdrawalDAO extends DAO {
 
     public WithdrawalDAO() {

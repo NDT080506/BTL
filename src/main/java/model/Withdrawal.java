@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * Entity: Withdrawal (Yêu cầu rút tiền)
- * Bảng tương ứng: tblWithdrawal
- */
 public class Withdrawal implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,8 +17,6 @@ public class Withdrawal implements Serializable {
     private String status; // PENDING, PROCESSING, COMPLETED, REJECTED
     private Timestamp createdAt;
     private Timestamp processedAt;
-
-    // References
     private User user;
     private Wallet wallet;
 

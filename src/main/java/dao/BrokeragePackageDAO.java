@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.UUID;
 import model.BrokeragePackage;
 
-/**
- * BrokeragePackageDAO: Thao tác dữ liệu bảng tblBrokeragePackage
- * Phục vụ: CN02.03, CN02.07, CN06.03
- */
 public class BrokeragePackageDAO extends DAO {
 
     public BrokeragePackageDAO() {

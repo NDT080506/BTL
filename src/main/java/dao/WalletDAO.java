@@ -4,10 +4,6 @@ import java.sql.*;
 import java.util.UUID;
 import model.Wallet;
 
-/**
- * WalletDAO: Thao tác dữ liệu bảng tblWallet
- * Phục vụ: CN02.08, CN02.14, CN06.05, CN06.06
- */
 public class WalletDAO extends DAO {
 
     public WalletDAO() {
@@ -44,9 +40,6 @@ public class WalletDAO extends DAO {
         return null;
     }
 
-    /**
-     * Tạo ví mới cho người dùng nếu chưa có (CN02.14)
-     */
     public boolean insert(Wallet wallet) {
         String sql = "INSERT INTO tblWallet (id, user_id, available_balance, created_at) " +
                      "VALUES (?, ?, ?, ?)";

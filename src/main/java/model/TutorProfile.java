@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * Entity: TutorProfile (Hồ sơ chuyên môn gia sư)
- * Bảng tương ứng: tblTutorProfile
- */
 public class TutorProfile implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -17,8 +13,6 @@ public class TutorProfile implements Serializable {
     private double rating;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
-    // References
     private User user;
 
     public TutorProfile() {

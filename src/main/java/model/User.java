@@ -2,12 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
-/**
- * Entity: User (Người dùng)
- * Bảng tương ứng: tblUser
- */
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,10 +18,12 @@ public class User implements Serializable {
     private String phone;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
-    // References
     private TutorProfile tutorProfile;
     private Wallet wallet;
+    private List<TutorApplication> tutorApplications;
+    private List<Booking> bookings;
+    private List<Dispute> disputes;
+    private List<BrokeragePackage> brokeragePackages;
 
     public User() {
     }
@@ -155,6 +154,38 @@ public class User implements Serializable {
 
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
+    }
+
+    public List<TutorApplication> getTutorApplications() {
+        return tutorApplications;
+    }
+
+    public void setTutorApplications(List<TutorApplication> tutorApplications) {
+        this.tutorApplications = tutorApplications;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public List<Dispute> getDisputes() {
+        return disputes;
+    }
+
+    public void setDisputes(List<Dispute> disputes) {
+        this.disputes = disputes;
+    }
+
+    public List<BrokeragePackage> getBrokeragePackages() {
+        return brokeragePackages;
+    }
+
+    public void setBrokeragePackages(List<BrokeragePackage> brokeragePackages) {
+        this.brokeragePackages = brokeragePackages;
     }
 
     @Override

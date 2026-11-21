@@ -11,10 +11,6 @@ import model.User;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Unit Test cho nhóm Đặt lịch và Gói dịch vụ
- * Bao phủ các luồng: CN04, CN08, CN11, CN15
- */
 public class BookingDAOTest {
     private BookingDAO bookingDAO;
     private BrokeragePackageDAO packageDAO;
@@ -27,7 +23,6 @@ public class BookingDAOTest {
         userDAO = new UserDAO();
     }
 
-    // CN04 - Đặt lịch thuê gia sư: Kiểm tra khung giờ trống khả dụng
     @Test
     public void test_CN04_BookingScheduleAvailable() {
         Timestamp futureTime = Timestamp.valueOf("2030-01-01 08:00:00");
@@ -36,9 +31,8 @@ public class BookingDAOTest {
         assertTrue("Khung giờ trống trong tương lai phải khả dụng (true)", available);
     }
 
-    // CN08 - Gia sư tiếp nhận và chấp nhận lịch đặt: Phản hồi lịch đặt
     @Test
-    public void test_CN08_TutorResponseBooking() {
+    public void test_CN08_TutorResponseBookingUseCase() {
         User student = userDAO.checkLogin("student01", "123456");
         User tutor = userDAO.checkLogin("tutor01", "123456");
         assertNotNull("student01 phải tồn tại", student);
@@ -54,14 +48,12 @@ public class BookingDAOTest {
         assertTrue("Gia sư chấp nhận lịch đặt (ACCEPTED) phải thành công", updated);
     }
 
-    // CN11 - Quản trị tra cứu danh sách gói gia sư: Tra cứu danh sách gói
     @Test
     public void test_CN11_FindActivePackages() {
         List<BrokeragePackage> packages = packageDAO.findAll("", true);
         assertNotNull("Danh sách gói học đang hoạt động không được null", packages);
     }
 
-    // CN15 - Gia sư thiết lập và quản lý gói dịch vụ: Thêm mới gói dịch vụ
     @Test
     public void test_CN15_BrokeragePackageInsert() {
         User tutor = userDAO.checkLogin("tutor01", "123456");

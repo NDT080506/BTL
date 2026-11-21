@@ -6,19 +6,12 @@ import java.util.List;
 import java.util.UUID;
 import model.Booking;
 
-/**
- * BookingDAO: Thao tác dữ liệu bảng tblBooking
- * Phục vụ: CN02.07, CN02.08, CN04.01, CN06.05
- */
 public class BookingDAO extends DAO {
 
     public BookingDAO() {
         super();
     }
 
-    /**
-     * Kiểm tra lịch của gia sư có bị trùng lặp thời gian không (CN02.07)
-     */
     public boolean isScheduleAvailable(UUID tutorId, Timestamp scheduledAt, int durationMinutes) {
         // Một buổi học kéo dài durationMinutes phút
         long startMs = scheduledAt.getTime();
@@ -48,9 +41,6 @@ public class BookingDAO extends DAO {
         }
     }
 
-    /**
-     * Tạo đơn đặt gia sư mới (CN02.07)
-     */
     public boolean insert(Booking booking) {
         String sql = "INSERT INTO tblBooking (id, student_id, tutor_id, package_id, scheduled_at, " +
                 "duration_minutes, note, status, total_price, created_at) " +
@@ -81,9 +71,6 @@ public class BookingDAO extends DAO {
         }
     }
 
-    /**
-     * Lấy danh sách booking đang chờ gia sư phản hồi (CN04.01)
-     */
     public List<Booking> findPendingByTutor(UUID tutorId) {
         List<Booking> list = new ArrayList<>();
         String sql = "SELECT * FROM tblBooking WHERE tutor_id = ? AND status = 'PENDING_TUTOR_CONFIRMATION' " +
@@ -120,9 +107,6 @@ public class BookingDAO extends DAO {
         return list;
     }
 
-    /**
-     * Lấy booking có thể thanh toán (phải ở trạng thái ACCEPTED) (CN02.08)
-     */
     public Booking findPayable(UUID bookingId) {
         String sql = "SELECT * FROM tblBooking WHERE id = ? AND status = 'ACCEPTED'";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -153,9 +137,6 @@ public class BookingDAO extends DAO {
         return null;
     }
 
-    /**
-     * Gia sư phản hồi đơn đặt (CN04.01: ACCEPTED hoặc REJECTED)
-     */
     public boolean updateResponse(UUID bookingId, String newStatus) {
         String sql = "UPDATE tblBooking SET status = ?, updated_at = CURRENT_TIMESTAMP " +
                 "WHERE id = ? AND status = 'PENDING_TUTOR_CONFIRMATION'";

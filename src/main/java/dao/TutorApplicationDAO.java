@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.UUID;
 import model.TutorApplication;
 
-/**
- * TutorApplicationDAO: Thao tác hồ sơ ứng tuyển gia sư
- * Phục vụ: CN02.13, CN06.02
- */
 public class TutorApplicationDAO extends DAO {
 
     public TutorApplicationDAO() {

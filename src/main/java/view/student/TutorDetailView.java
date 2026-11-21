@@ -12,9 +12,6 @@ import model.BrokeragePackage;
 import model.TutorProfile;
 import model.User;
 
-/**
- * TutorDetailView: Màn hình Xem hồ sơ gia sư & Danh sách gói học (CN02.03)
- */
 public class TutorDetailView extends JDialog implements ActionListener {
     private TutorSearchView parent;
     private User student;

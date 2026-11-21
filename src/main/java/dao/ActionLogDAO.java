@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.UUID;
 import model.ActionLog;
 
-/**
- * ActionLogDAO: Thao tác nhật ký hệ thống
- * Phục vụ: CN06.07
- */
 public class ActionLogDAO extends DAO {
 
     public ActionLogDAO() {

@@ -10,10 +10,6 @@ import view.admin.AdminHomeView;
 import view.student.StudentHomeView;
 import view.tutor.TutorHomeView;
 
-/**
- * LoginView: Màn hình Đăng nhập (CN01.04)
- * Kế thừa JFrame, implement ActionListener
- */
 public class LoginView extends JFrame implements ActionListener {
     private JTextField txtUsername;
     private JPasswordField txtPassword;

@@ -4,10 +4,6 @@ import java.sql.*;
 import java.util.UUID;
 import model.TutorProfile;
 
-/**
- * TutorProfileDAO: Thao tác dữ liệu bảng tblTutorProfile
- * Phục vụ: CN02.03, CN06.02
- */
 public class TutorProfileDAO extends DAO {
 
     public TutorProfileDAO() {

@@ -8,19 +8,12 @@ import model.Booking;
 import model.PaymentTransaction;
 import model.Wallet;
 
-/**
- * PaymentTransactionDAO: Thao tác giao dịch tiền tệ
- * Xử lý giao dịch nguyên tử (Atomic transactions) cho CN02.08, CN02.14, CN06.05
- */
 public class PaymentTransactionDAO extends DAO {
 
     public PaymentTransactionDAO() {
         super();
     }
 
-    /**
-     * Kiểm tra booking đã có giao dịch thanh toán thành công chưa (CN02.08)
-     */
     public boolean hasSuccessfulPayment(UUID bookingId) {
         String sql = "SELECT 1 FROM tblPaymentTransaction WHERE booking_id = ? AND type = 'TRANSFER' AND status = 'SUCCESS'";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -34,9 +27,6 @@ public class PaymentTransactionDAO extends DAO {
         }
     }
 
-    /**
-     * Tạo yêu cầu nạp tiền đang chờ xử lý (CN02.14)
-     */
     public PaymentTransaction createPendingDeposit(Wallet wallet, long amount, String referenceCode) {
         String sql = "INSERT INTO tblPaymentTransaction (id, source_wallet_id, destination_wallet_id, " +
                      "booking_id, type, status, amount, reference_code, created_at) " +
@@ -58,10 +48,6 @@ public class PaymentTransactionDAO extends DAO {
         return null;
     }
 
-    /**
-     * Xác nhận nạp tiền từ kết quả cổng mô phỏng (CN02.14)
-     * Thực hiện kiểm tra trùng lặp và cộng tiền nguyên tử
-     */
     public boolean confirmDeposit(String referenceCode, String gatewayResult) {
         String checkSql = "SELECT * FROM tblPaymentTransaction WHERE reference_code = ? AND status = 'PENDING'";
         try {
@@ -118,10 +104,6 @@ public class PaymentTransactionDAO extends DAO {
         }
     }
 
-    /**
-     * Chuyển tiền trực tiếp từ ví học viên sang ví gia sư (CN02.08)
-     * Thực hiện nguyên tử: trừ ví học viên, cộng ví gia sư, tạo transaction, cập nhật booking PAID
-     */
     public PaymentTransaction transferBetweenWallets(Booking booking, Wallet studentWallet, Wallet tutorWallet, long amount) {
         String debitSql = "UPDATE tblWallet SET available_balance = available_balance - ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND available_balance >= ?";
         String creditSql = "UPDATE tblWallet SET available_balance = available_balance + ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
@@ -185,9 +167,6 @@ public class PaymentTransactionDAO extends DAO {
         }
     }
 
-    /**
-     * Hoàn tiền trực tiếp từ ví gia sư về ví học viên (CN06.05)
-     */
     public boolean refundBetweenWallets(UUID disputeId, UUID bookingId, Wallet tutorWallet, Wallet studentWallet, long refundAmount) {
         String debitSql = "UPDATE tblWallet SET available_balance = available_balance - ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND available_balance >= ?";
         String creditSql = "UPDATE tblWallet SET available_balance = available_balance + ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";

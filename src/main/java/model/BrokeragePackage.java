@@ -2,12 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
-/**
- * Entity: BrokeragePackage (Gói dịch vụ gia sư)
- * Bảng tương ứng: tblBrokeragePackage
- */
 public class BrokeragePackage implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -19,9 +16,8 @@ public class BrokeragePackage implements Serializable {
     private boolean active;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
-    // References
     private User tutor;
+    private List<Booking> bookings;
 
     public BrokeragePackage() {
         this.active = true;
@@ -120,6 +116,14 @@ public class BrokeragePackage implements Serializable {
 
     public void setTutor(User tutor) {
         this.tutor = tutor;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     @Override

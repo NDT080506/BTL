@@ -12,9 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import model.Booking;
 import model.User;
 
-/**
- * TutorBookingView: Gia sư tiếp nhận và chấp nhận lịch đặt (CN04.01)
- */
 public class TutorBookingView extends JDialog implements ActionListener {
     private TutorHomeView parent;
     private User currentTutor;

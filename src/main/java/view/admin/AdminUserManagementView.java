@@ -11,9 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import model.ActionLog;
 import model.User;
 
-/**
- * AdminUserManagementView: Quản trị người dùng và trạng thái tài khoản (CN06.01)
- */
 public class AdminUserManagementView extends JDialog implements ActionListener {
     private AdminHomeView parent;
     private User currentAdmin;
@@ -155,7 +152,6 @@ public class AdminUserManagementView extends JDialog implements ActionListener {
 
             User targetUser = userList.get(selectedRow);
 
-            // Kiểm tra quy tắc nghiệp vụ: Không cho phép tự khóa tài khoản quản trị viên đang thao tác
             if (e.getSource() == btnLock && targetUser.getId().equals(currentAdmin.getId())) {
                 JOptionPane.showMessageDialog(this, "Quy tắc nghiệp vụ: Quản trị viên không được phép tự khóa tài khoản của chính mình!", "Cảnh báo", JOptionPane.ERROR_MESSAGE);
                 return;

@@ -6,19 +6,12 @@ import java.util.List;
 import java.util.UUID;
 import model.User;
 
-/**
- * UserDAO: Thao tác dữ liệu bảng tblUser
- * Phục vụ: CN01.03, CN01.04, CN02.03, CN06.01, CN06.02
- */
 public class UserDAO extends DAO {
 
     public UserDAO() {
         super();
     }
 
-    /**
-     * Kiểm tra username đã tồn tại chưa (CN01.03)
-     */
     public boolean isUsernameExists(String username) {
         String sql = "SELECT 1 FROM tblUser WHERE username = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -32,9 +25,6 @@ public class UserDAO extends DAO {
         }
     }
 
-    /**
-     * Đăng ký tài khoản mới (CN01.03)
-     */
     public boolean insert(User user) {
         String sql = "INSERT INTO tblUser (id, username, password, email, display_name, role, status, phone, created_at) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -60,10 +50,6 @@ public class UserDAO extends DAO {
         }
     }
 
-    /**
-     * Kiểm tra đăng nhập (CN01.04)
-     * Trả về đối tượng User nếu đúng mật khẩu và tài khoản không bị khóa, ngược lại trả về null.
-     */
     public User checkLogin(String username, String password) {
         String sql = "SELECT * FROM tblUser WHERE username = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -108,23 +94,14 @@ public class UserDAO extends DAO {
         return null;
     }
 
-    /**
-     * Lấy thông tin tóm tắt của gia sư theo ID (theo đúng tên phương thức trong Sequence Diagram CN02.03)
-     */
     public User findTutorSummary(UUID tutorId) {
         return findById(tutorId);
     }
 
-    /**
-     * Lấy thông tin tóm tắt của học viên theo ID (theo đúng tên phương thức trong Sequence Diagram CN04.01)
-     */
     public User findStudentSummary(UUID studentId) {
         return findById(studentId);
     }
 
-    /**
-     * Tìm kiếm danh sách gia sư theo từ khóa / môn học (CN02.03)
-     */
     public List<User> searchTutors(String keyword, String subject) {
         List<User> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder(
@@ -159,9 +136,6 @@ public class UserDAO extends DAO {
         return list;
     }
 
-    /**
-     * Quản trị: Lấy danh sách người dùng kèm lọc (CN06.01)
-     */
     public List<User> findAll(String keyword, String role, String status) {
         List<User> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM tblUser WHERE 1=1 ");
@@ -200,9 +174,6 @@ public class UserDAO extends DAO {
         return list;
     }
 
-    /**
-     * Cập nhật trạng thái người dùng (CN06.01: Khóa / Mở khóa)
-     */
     public boolean updateStatus(UUID userId, String newStatus) {
         String sql = "UPDATE tblUser SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -215,9 +186,6 @@ public class UserDAO extends DAO {
         }
     }
 
-    /**
-     * Cập nhật vai trò người dùng (CN06.02: Nâng cấp thành TUTOR)
-     */
     public boolean updateRole(UUID userId, String newRole) {
         String sql = "UPDATE tblUser SET role = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {

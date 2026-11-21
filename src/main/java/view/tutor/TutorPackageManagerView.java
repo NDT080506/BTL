@@ -10,10 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import model.BrokeragePackage;
 import model.User;
 
-/**
- * TutorPackageManagerView: Quản lý gói dịch vụ của Gia sư
- * Cung cấp dữ liệu trực tiếp cho CN02.03 (Học viên tra cứu) & CN06.03 (Admin tra cứu)
- */
 public class TutorPackageManagerView extends JDialog implements ActionListener {
     private TutorHomeView parent;
     private User tutor;

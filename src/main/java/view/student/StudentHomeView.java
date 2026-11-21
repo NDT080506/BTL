@@ -9,9 +9,6 @@ import model.User;
 import model.Wallet;
 import view.auth.LoginView;
 
-/**
- * StudentHomeView: Màn hình chính của Học viên
- */
 public class StudentHomeView extends JFrame implements ActionListener {
     private User currentUser;
     private Wallet userWallet;

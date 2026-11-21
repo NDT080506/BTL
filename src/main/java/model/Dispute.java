@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * Entity: Dispute (Khiếu nại và hoàn tiền)
- * Bảng tương ứng: tblDispute
- */
 public class Dispute implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,8 +17,6 @@ public class Dispute implements Serializable {
     private String adminNote;
     private Timestamp createdAt;
     private Timestamp resolvedAt;
-
-    // References
     private Booking booking;
     private User createdBy;
 
