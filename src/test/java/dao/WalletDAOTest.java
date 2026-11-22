@@ -2,60 +2,139 @@ package dao;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
 import java.util.UUID;
 import model.User;
 import model.Wallet;
-import model.Withdrawal;
 import org.junit.Before;
 import org.junit.Test;
 
 public class WalletDAOTest {
     private WalletDAO walletDAO;
-    private WithdrawalDAO withdrawalDAO;
     private UserDAO userDAO;
 
     @Before
     public void setUp() {
         walletDAO = new WalletDAO();
-        withdrawalDAO = new WithdrawalDAO();
         userDAO = new UserDAO();
     }
 
     @Test
-    public void test_CN05_PaymentCheckoutDebit() {
+    public void testFindByUserId_Standard() {
+        User student = userDAO.checkLogin("student01", "123456");
+        assertNotNull(student);
+
+        Wallet wallet = walletDAO.findByUserId(student.getId());
+        assertNotNull("Ví của student01 phải tồn tại trong CSDL", wallet);
+        assertEquals(student.getId(), wallet.getUserId());
+        assertTrue("Số dư ví ban đầu phải >= 0", wallet.getAvailableBalance() >= 0);
+    }
+
+    @Test
+    public void testFindByUserId_Exception_NotFound() {
+        Wallet wallet = walletDAO.findByUserId(UUID.randomUUID());
+        assertNull("User ngẫu nhiên không có ví phải trả về null", wallet);
+    }
+
+    @Test
+    public void testCredit_Standard() {
+        try {
+            DAO.con.setAutoCommit(false);
+
+            User student = userDAO.checkLogin("student01", "123456");
+            assertNotNull(student);
+            Wallet wallet = walletDAO.findByUserId(student.getId());
+            assertNotNull(wallet);
+
+            long oldBalance = wallet.getAvailableBalance();
+            boolean credited = walletDAO.credit(wallet.getId(), 200000L);
+            assertTrue("Nạp tiền vào ví thành công", credited);
+
+            Wallet updated = walletDAO.findById(wallet.getId());
+            assertNotNull(updated);
+            assertEquals(oldBalance + 200000L, updated.getAvailableBalance());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Lỗi khi test credit wallet: " + e.getMessage());
+        } finally {
+            try {
+                DAO.con.rollback();
+                DAO.con.setAutoCommit(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void testDebit_Standard() {
+        try {
+            DAO.con.setAutoCommit(false);
+
+            User student = userDAO.checkLogin("student01", "123456");
+            assertNotNull(student);
+            Wallet wallet = walletDAO.findByUserId(student.getId());
+            assertNotNull(wallet);
+
+            if (wallet.getAvailableBalance() < 100000L) {
+                walletDAO.credit(wallet.getId(), 500000L);
+                wallet = walletDAO.findById(wallet.getId());
+            }
+
+            long oldBalance = wallet.getAvailableBalance();
+            boolean debited = walletDAO.debit(wallet.getId(), 50000L);
+            assertTrue("Trừ tiền khỏi ví khi đủ số dư phải thành công", debited);
+
+            Wallet updated = walletDAO.findById(wallet.getId());
+            assertNotNull(updated);
+            assertEquals(oldBalance - 50000L, updated.getAvailableBalance());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Lỗi khi test debit wallet: " + e.getMessage());
+        } finally {
+            try {
+                DAO.con.rollback();
+                DAO.con.setAutoCommit(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void testDebit_Exception_InsufficientBalance() {
+        try {
+            DAO.con.setAutoCommit(false);
+
+            User student = userDAO.checkLogin("student01", "123456");
+            assertNotNull(student);
+            Wallet wallet = walletDAO.findByUserId(student.getId());
+            assertNotNull(wallet);
+
+            boolean debited = walletDAO.debit(wallet.getId(), 9999999999L);
+            assertFalse("Trừ số tiền vượt quá số dư khả dụng phải trả về false", debited);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Lỗi khi test debit vượt quá số dư: " + e.getMessage());
+        } finally {
+            try {
+                DAO.con.rollback();
+                DAO.con.setAutoCommit(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void testDomainModel_DebitCreditLogic() {
         Wallet w = new Wallet(UUID.randomUUID(), 500000);
-        boolean success = w.debit(300000);
-        assertTrue("Trừ số tiền hợp lệ khỏi ví phải thành công", success);
+        assertTrue(w.debit(300000));
         assertEquals(200000, w.getAvailableBalance());
 
-        boolean failInsufficient = w.debit(300000);
-        assertFalse("Trừ số tiền vượt quá số dư khả dụng phải trả về false", failInsufficient);
+        assertFalse(w.debit(300000));
         assertEquals(200000, w.getAvailableBalance());
-    }
 
-    @Test
-    public void test_CN07_WalletCredit_TopUp() {
-        Wallet w = new Wallet(UUID.randomUUID(), 100000);
-        w.credit(500000);
-        assertEquals(600000, w.getAvailableBalance());
-    }
-
-    @Test
-    public void test_CN13_WithdrawalInquiry() {
-        List<Withdrawal> list = withdrawalDAO.findAll("", "");
-        assertNotNull("Danh sách yêu cầu rút tiền tra cứu không được null", list);
-    }
-
-    @Test
-    public void test_CN16_CreateWithdrawal() {
-        User tutor = userDAO.checkLogin("tutor01", "123456");
-        assertNotNull("tutor01 phải tồn tại", tutor);
-        Wallet wallet = walletDAO.findByUserId(tutor.getId());
-        assertNotNull("Ví của tutor01 phải tồn tại", wallet);
-
-        Withdrawal wd = new Withdrawal(tutor.getId(), wallet.getId(), 200000L, "Vietcombank", "0011004567890", "MINH");
-        boolean inserted = withdrawalDAO.insert(wd);
-        assertTrue("Tạo yêu cầu rút tiền thành công phải trả về true", inserted);
+        w.credit(100000);
+        assertEquals(300000, w.getAvailableBalance());
     }
 }

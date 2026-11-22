@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="dao.UserDAOTest" time="0.032" tests="5" errors="0" skipped="0" failures="0" flakes="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="dao.UserDAOTest" time="0.138" tests="14" errors="0" skipped="0" failures="0" flakes="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -16,7 +16,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
-    <property name="sun.java.command" value="C:\Users\ADMIN\AppData\Local\Temp\surefire8179119894861313792\surefirebooter-20261121223257057_3.jar C:\Users\ADMIN\AppData\Local\Temp\surefire8179119894861313792 2026-11-21T22-32-56_931-jvmRun1 surefire-20261121223257057_1tmp surefire_0-20261121223257057_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\ADMIN\AppData\Local\Temp\surefire2529312108872697378\surefirebooter-20261122233606389_3.jar C:\Users\ADMIN\AppData\Local\Temp\surefire2529312108872697378 2026-11-22T23-36-05_499-jvmRun1 surefire-20261122233606389_1tmp surefire_0-20261122233606389_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\target\test-classes;E:\CodingStuffs\Hoclaptrinh\JAVA\TutorTech\target\classes;C:\Users\ADMIN\.m2\repository\org\postgresql\postgresql\42.7.2\postgresql-42.7.2.jar;C:\Users\ADMIN\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\ADMIN\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\ADMIN\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\ADMIN\.m2\repository\com\formdev\flatlaf\3.4.1\flatlaf-3.4.1.jar"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -31,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\ADMIN\AppData\Local\Temp\surefire8179119894861313792\surefirebooter-20261121223257057_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\ADMIN\AppData\Local\Temp\surefire2529312108872697378\surefirebooter-20261122233606389_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.8+12-LTS-250"/>
@@ -60,9 +60,18 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="test_CN09_UpdateUserStatus" classname="dao.UserDAOTest" time="0.007"/>
-  <testcase name="test_CN14_ActionLogInquiry" classname="dao.UserDAOTest" time="0.009"/>
-  <testcase name="test_CN02_CheckLogin_Success" classname="dao.UserDAOTest" time="0.003"/>
-  <testcase name="test_CN01_Register_UsernameCheck" classname="dao.UserDAOTest" time="0.006"/>
-  <testcase name="test_CN03_SearchTutors" classname="dao.UserDAOTest" time="0.004"/>
+  <testcase name="testIsUsernameExists_Standard" classname="dao.UserDAOTest" time="0.007"/>
+  <testcase name="testCheckLogin_Exception_UserNotFound" classname="dao.UserDAOTest" time="0.004"/>
+  <testcase name="testInsertUser_Standard" classname="dao.UserDAOTest" time="0.011"/>
+  <testcase name="testCheckLogin_Standard" classname="dao.UserDAOTest" time="0.003"/>
+  <testcase name="testIsUsernameExists_Exception_NotFound" classname="dao.UserDAOTest" time="0.003"/>
+  <testcase name="testFindById_Exception_NotFound" classname="dao.UserDAOTest" time="0.002"/>
+  <testcase name="testSearchTutors_Exception_NotFound" classname="dao.UserDAOTest" time="0.006"/>
+  <testcase name="testCheckLogin_Exception_LockedUser" classname="dao.UserDAOTest" time="0.005"/>
+  <testcase name="testSearchTutors_Standard" classname="dao.UserDAOTest" time="0.008"/>
+  <testcase name="testUpdateStatus_Standard" classname="dao.UserDAOTest" time="0.023"/>
+  <testcase name="testIsUsernameExists_Boundary_Empty" classname="dao.UserDAOTest" time="0.014"/>
+  <testcase name="testSearchTutors_Boundary_EmptyKeywords" classname="dao.UserDAOTest" time="0.013"/>
+  <testcase name="testFindById_Standard" classname="dao.UserDAOTest" time="0.012"/>
+  <testcase name="testCheckLogin_Exception_WrongPassword" classname="dao.UserDAOTest" time="0.008"/>
 </testsuite>
