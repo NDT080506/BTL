@@ -1,4 +1,6 @@
-package dao;
+﻿package blackboxtesting;
+
+import dao.*;
 
 import static org.junit.Assert.*;
 
@@ -100,3 +102,4 @@ public class PaymentTransactionDAOTest {
         }
     }
 }
+

@@ -1,4 +1,6 @@
-package dao;
+﻿package blackboxtesting;
+
+import dao.*;
 
 import static org.junit.Assert.*;
 
@@ -168,3 +170,4 @@ public class UserDAOTest {
         assertNull("Tìm người dùng với ID không tồn tại phải trả về null", found);
     }
 }
+

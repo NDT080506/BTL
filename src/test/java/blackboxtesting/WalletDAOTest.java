@@ -1,4 +1,6 @@
-package dao;
+﻿package blackboxtesting;
+
+import dao.*;
 
 import static org.junit.Assert.*;
 
@@ -138,3 +140,4 @@ public class WalletDAOTest {
         assertEquals(300000, w.getAvailableBalance());
     }
 }
+
